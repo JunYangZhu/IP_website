@@ -1,20 +1,14 @@
-#div1 {
-    max-width: 140px;
-    max-height: 140px;
-    padding: 10%;
-    border: 1px; 
-    border-color:black;
-  }
-
-#map {
-    display:flex;
-    flex-direction: row;
-    max-width: 720px;
-    min-height: 720px;
-    flex-wrap: wrap;
+header {
+    display: flex;
     justify-content: center;
-    flex-basis: 18%;
+    margin:auto;
 }
-p {
-    font-size: 10px;
+
+nav{
+    max-width: 10%;
+    background-color: antiquewhite;
+}
+
+a {
+    text-decoration: none;
 }
