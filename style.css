@@ -12,3 +12,15 @@ nav{
 a {
     text-decoration: none;
 }
+
+span {
+    width: 100px;
+    height: 100px;
+    border: 1px;
+    border-radius: 50px;
+    border-color: black;
+}
+
+body {
+
+}
