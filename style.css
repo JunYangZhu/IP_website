@@ -10,14 +10,7 @@ nav{
 
 a {
     text-decoration: none;
-}
-
-span {
-    width: 100px;
-    height: 100px;
-    border: 1px;
-    border-radius: 50px;
-    border-color: black;
+    color: rgb(0, 255, 119);
 }
 
 body {
@@ -25,8 +18,26 @@ body {
 }
 
 .collection{
-    background-color: rgb(226, 236, 245);
+    background-color: rgb(241, 249, 255);
     margin: 50px;
+    border-radius: 5px;
+    padding: 40px;
+}
+
+.contents{
+    background-color: rgb(241, 249, 255);
+    margin: 50px;
+    width: auto;
+    border-radius: 5px;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.cart-list{
+    background-color: rgb(241, 249, 255);
+    margin: 50px;
+    width: auto;
     border-radius: 5px;
     padding: 40px;
 }
@@ -37,6 +48,7 @@ body {
     background-color: aliceblue;
     flex-wrap: wrap;
     margin-top: 50px;
+    justify-content: center;
 }
 
 .item {
@@ -80,6 +92,14 @@ img:focus {
     margin-right: 5px;
 }
 
+.button {
+    border: 1px solid rgb(0, 255, 119);
+    background-color: white;
+    width: 90px;
+    margin-left: 85%;
+    padding: 1%;
+}
+
 .left {
     display: flex;
     flex-direction: row;
@@ -101,15 +121,35 @@ html {
     display: none; /* Chrome, Safari, Opera */
     }
 
-    @media (max-width:576px){
-        nav{
-            display:flex;
-            flex-wrap: wrap;
-            font-size: 20px;
-        }
-        .item {
-            flex-basis: 45%;
-            flex-grow: 1;
-            flex-grow: inherit;
-        }
+.left-container {
+    margin: 20px;
+    width: 45%;
+    border-radius: 8px;
+    background-color: rgb(0, 255, 119);
+    padding: 2%;
+    overflow-wrap: break-word;
+}
+.right-container {
+    margin: 20px;
+    width: 45%;
+    border-radius: 8px;
+    background-color: rgb(0, 255, 119);
+    padding: 2%;
+    overflow-wrap: break-word;
+}
+
+@media (max-width:576px){
+    nav{
+        display:flex;
+        flex-wrap: wrap;
+        font-size: 20px;
     }
+    .item {
+        flex-basis: 45%;
+        flex-grow: 1;
+        flex-grow: inherit;
+    }
+}
+
+
+
