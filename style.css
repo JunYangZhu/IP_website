@@ -60,10 +60,21 @@ body {
     border: 1px solid rgb(191, 191, 191);
 }
 
+.item-cart {
+    padding: 2%;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgb(191, 191, 191)
+}
+
 .img img {
     max-width: 100%;
     cursor: pointer;
     transition: -webkit-transform 0.1s ease
+}
+
+.item-cart .img {
+    width: 150px;
 }
 
 img:focus {
@@ -95,8 +106,9 @@ img:focus {
 .button {
     border: 1px solid rgb(0, 255, 119);
     background-color: white;
-    width: 90px;
-    margin-left: 85%;
+    width: 85px;
+    margin-left: 78%;
+    margin-bottom: 40px;
     padding: 1%;
 }
 
