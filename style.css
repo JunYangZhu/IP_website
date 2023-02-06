@@ -162,9 +162,33 @@ html {
 .user-profile {
     display: flex;
     flex-direction: row;
-    border: solid black;
     margin: 20px;
-    width: 300%;
+    width: 100%;
+}
+
+.in-app-benefits {
+    display: flex;
+    flex-direction: row;
+    border: solid black;
+    width: 300px;
+    height: 100px;
+    padding: 10px;
+}
+
+.order-prog {
+    margin: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 120px;
+}
+
+.figure-collection{
+    background-color: rgb(241, 249, 255);
+    margin: 50px;
+    border-radius: 5px;
+    padding: 40px;
+    width: 100%;
 }
 
 @media (max-width:576px){
