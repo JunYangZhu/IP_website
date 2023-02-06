@@ -16,7 +16,43 @@
             <a href="cart.html"><i class="fa-regular fa-circle-left"></i></a>
         </div>
         <div class="contents">
-            Payment method
+            Shipping details
+            <div class="form" id="checkout">
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="shipping-address">Shipping Address</label>
+                        <textarea></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="order-list">Your orders</label>
+                        <div class="order-list"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-method">Shipping Method</label>
+                        <input type="radio" id="standard">
+                        <label for="standard">Standard Shipping</label>
+                        <input type="radio" id="express">
+                        <label for="express">Express Shipping</label>
+                        <input type="radio" id="guarantee">
+                        <label for="guarantee">Shipping Guarantee</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="voucher">Apply Voucher</label>
+                        <input type="text">
+                    </div>
+                </form>
+                <div class="price-details">
+                    Retail price:
+                    Subtotal:
+                    Shipping fee:
+                    Shipping guarantee:
+
+                    Total:
+                </div>
+                <div class="button">
+                    <a href="payment.html">Next</a>
+                </div>
+            </div>
         </div>
     </body>
 </html>
