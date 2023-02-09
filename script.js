@@ -5,6 +5,11 @@ $(document).ready(function () {
     $("#login-container").hide();
     $("#update-account-container").hide();
     $("#add-update-pw").hide();
+    $("#account-data").hide();
+    $("#payment").hide();
+    $("#complete").hide();
+    $("#dropdown").hide();
+    $("#card-payment").hide();
   
     //[STEP 1]: Create our submit form listener
     $("#account-submit").on("click", function (e) {
@@ -45,6 +50,7 @@ $(document).ready(function () {
           $("#account-submit").prop( "disabled", true);
           //clear our form using the form id and triggering it's reset feature
           $("#add-account-form").trigger("reset");
+          window.location="home.html"
         }
       }
   
@@ -124,11 +130,6 @@ $(document).ready(function () {
     
     $("#open-login").on("click",function (e) {
         e.preventDefault();
-        let accountName = $(this).data("name");
-        let accountEmail = $(this).data("email");
-        let accountPassword = $(this).data("pw");
-        let accountId = $(this).data("id");
-        console.log($(this).data("pw"));
         $("#add-container").hide();
         $("#login-container").show();
     })
@@ -144,6 +145,7 @@ $(document).ready(function () {
         let inputName = $("#login-name").val();
         let inputPassword = $("#login-pw").val();
 
+        window.location="home.html";
         validateForm(inputName,inputPassword);
     })
 
@@ -240,3 +242,35 @@ $(document).ready(function () {
     }//end updateform function
   
   })
+
+$("#next-button").on("click",function (e) {
+    e.preventDefault();
+    $("#checkout").hide();
+    $("#payment").show();
+})
+
+$("#checkout-submit").on("click",function (e) {
+    e.preventDefault();
+    $("#payment").hide();
+    $("#complete").show();
+})
+
+$("#hover").on("hover",function (e) {
+    e.preventDefault();
+    $("#dropdown").show();
+})
+
+$("#card").on("click",function (e) {
+    e.preventDefault();
+    $("#card-payment").show();
+})
+
+$("#grab").on("click",function (e) {
+    e.preventDefault();
+    $("#card-payment").hide();
+})
+
+$("#apple").on("click",function (e) {
+    e.preventDefault();
+    $("#card-payment").hide();
+})

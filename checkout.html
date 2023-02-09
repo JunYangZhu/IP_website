@@ -3,56 +3,132 @@
     <head>
         <title>CATNAP - Checkout</title>
         <link rel="shortcut icon" href="img/browser tab icon.ico">
-        <header>CATNAP
-            <p>Pet accessories</p>
-        </header>
         <link href="normalize.css" rel="stylesheet" type="text/css" />
         <link href="style.css" rel="stylesheet" type="text/css" />
         <script src="https://kit.fontawesome.com/7d58918fca.js" crossorigin="anonymous"></script>
     </head>
     <header>Checkout</header>
     <body>
-        <div class="icons">
-            <a href="cart.html"><i class="fa-regular fa-circle-left"></i></a>
-        </div>
-        <div class="contents">
-            Shipping details
-            <div class="form" id="checkout">
-                <form id="checkout-form">
-                    <div class="form-group">
-                        <label for="shipping-address">Shipping Address</label>
-                        <textarea></textarea>
+        <div id="checkout">
+            <div class="icons">
+                <a href="cart.html"><i class="fa-regular fa-circle-left"></i></a>
+            </div>
+            <div class="form-container-two">
+                Shipping details
+                <div class="form">
+                    <form id="checkout-form">
+                        <div class="form-group" id="textarea">
+                            <label for="shipping-address">Shipping Address</label>
+                            <textarea></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-list">Your orders</label>
+                            <div class="order-list"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipping-method">Shipping Method</label>
+                            <div class="option">
+                                <input type="radio" id="standard">
+                                <label for="standard">Standard Shipping</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="express">
+                                <label for="express">Express Shipping</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="guarantee">
+                                <label for="guarantee">Shipping Guarantee</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="voucher">Apply Voucher</label>
+                            <input type="text" id="voucher">
+                        </div>
+                    </form>
+                    <div class="price-details">
+                        <div class="checkout-price">
+                            <label for="retail">Retail Price</label>
+                            <p id="retail">0</p>
+                        </div>
+                        <div class="checkout-price">
+                            <label for="subtotal">Subtotal</label>
+                            <p id="subtotal">0</p>
+                        </div>
+                        <div class="checkout-price">
+                            <label for="shipping">Shipping Fee</label>
+                            <p id="shipping">0</p>
+                        </div>
+                        <div class="checkout-price">
+                            <label for="ship-guarantee">Shipping Guarantee</label>
+                            <p id="ship-guarantee">0</p>
+                        </div>
+                        <p>----------------------------------------------------</p>
+                        <div class="checkout-price">
+                            <label for="total">Total</label>
+                            <p id="total">0</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="order-list">Your orders</label>
-                        <div class="order-list"></div>
+                    <div class="button" id="next-button">
+                        <button>Next</button>
                     </div>
-                    <div class="form-group">
-                        <label for="shipping-method">Shipping Method</label>
-                        <input type="radio" id="standard">
-                        <label for="standard">Standard Shipping</label>
-                        <input type="radio" id="express">
-                        <label for="express">Express Shipping</label>
-                        <input type="radio" id="guarantee">
-                        <label for="guarantee">Shipping Guarantee</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="voucher">Apply Voucher</label>
-                        <input type="text">
-                    </div>
-                </form>
-                <div class="price-details">
-                    Retail price:
-                    Subtotal:
-                    Shipping fee:
-                    Shipping guarantee:
-
-                    Total:
-                </div>
-                <div class="button">
-                    <a href="payment.html">Next</a>
                 </div>
             </div>
         </div>
+        <div id="payment">
+            <div class="icons">
+                <a href="checkout.html"><i class="fa-regular fa-circle-left"></i></a>
+            </div>
+            <div class="form-container-two">
+                Payment Method
+                <div class="form">
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="method">Pay by</label>
+                            <div id="method">
+                                <input type="radio" id="card">
+                                <label for="card">Credit/Debit Card</label>
+                                <input type="radio" id="grab">
+                                <label for="grab">Grabpay</label>
+                                <input type="radio" id="apple">
+                                <label for="apple">Applepay</label>
+                            </div>
+                        </div>
+                        <div id="card-payment">
+                            <div class="form-group">
+                                <label for="card-name">Name (as stated on card)</label>
+                                <input type="text" id="card-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-no">Card Number</label>
+                                <input type="number" id="card-no" min="1000000000000000" max="9999999999999999">
+                            </div>
+                            <div class="form-group">
+                                <label for="expiry">Expiry date</label>
+                                <input type="month" min="2023-02" max="2030-12" id="expiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="number" min="000" max="999" id="cvv">
+                            </div>
+                        </div>
+                        <div class="final-price">
+                            <label for="total">Total</label>
+                            <p id="total">0</p>
+                        </div>
+                        <input type="submit" value="Submit" class="btn btn-warning" id="checkout-submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="complete">
+            <div class="icons">
+                <a href="cart.html"><i class="fa-regular fa-circle-left"></i></a>
+            </div>
+            <div class="form-container-two">
+                <h2>Order made successfully!</h2>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

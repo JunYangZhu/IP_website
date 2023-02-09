@@ -5,7 +5,6 @@
         <link rel="shortcut icon" href="img/browser tab icon.ico">
         <header>
             <h1>CATNAP</h1>
-            <p>Pet accessories</p>
         </header>
         <link href="normalize.css" rel="stylesheet" type="text/css" />
         <link href="style.css" rel="stylesheet" type="text/css" />
@@ -27,13 +26,19 @@
             <div class="icons">
                 <a href="contacts.html"><i class="fa-solid fa-headset"></i></a>
             </div>
-            <div class="icons">
+            <div class="icons" id="hover">
                 <i class="fa-solid fa-user"></i>
+                <div id="dropdown">
+                    <a href="index.html">Logout</a>
+                    <a href="account.html">View Profile</a>
+                </div>
             </div>
         </nav>
     </div>
     <body>
-        <p>Account details</p>
+        <div id="logout" class="button">
+            <a href="index.html">Logout</a>
+        </div>
         <div class="contents">
             Profile details
             <div class="user-profile">
@@ -45,14 +50,26 @@
                 </div>
             </div>
             <div class="in-app-benefits">
-                <p>0 vouchers</p>
-                <p>0 points</p>
+                <div class="vouchers-container">
+                    <p id="vouchers">0</p>
+                    <label for="vouchers">vouchers</label>
+                </div>
+                <div class="points-container">
+                    <p id="points">0</p>
+                    <label for="points">points</label>
+                </div>
             </div>
             <div class="order-prog">
                 <a>View order progress</a>
+                <div class="orders">
+
+                </div>
             </div>
             <div class="figure-collection">
                 <a>View full collection</a>
+                <div class="figures">
+
+                </div>
             </div>
             <div class="left-container">
                 <h2>Recently viewed</h2>
@@ -61,5 +78,7 @@
                 <h2>Wishlist</h2>
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

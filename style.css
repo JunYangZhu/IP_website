@@ -13,8 +13,120 @@ a {
     color: rgb(0, 255, 119);
 }
 
-body {
+.form-container {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: solid black;
+    padding: 50px;
+    margin-top: 150px;
+    margin-left: 30%;
+}
 
+.form {
+    margin-left: 20px;
+}
+
+.form-container-two {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: solid black;
+    padding: 50px;
+    margin-top: 150px;
+    margin-left: 10%;
+}
+
+.form-group {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    margin-top: 10px;
+    height: 100px;
+    resize: none;
+}
+
+.option {
+    margin: 10px;
+}
+
+#voucher {
+    margin: 10px;
+    margin-left: 0px;
+    width: 150px;
+}
+
+.price-details {
+    width: 278px;
+    margin: 25px;
+    margin-left: 0px;
+    padding: 25px;
+    background-color: rgb(241, 249, 255);
+}
+
+.checkout-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#method {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+
+}
+
+#method label{
+    margin-right: 20px;
+}
+
+#card-name {
+    width: 200px;
+    margin-top: 10px;
+}
+
+#card-no {
+    width: 200px;
+    margin-top: 10px;
+}
+
+#expiry {
+    width: 130px;
+    margin-top: 10px;
+}
+
+#cvv {
+    width: 50px;
+    margin-top: 10px;
+}
+
+.final-price {
+    width: 278px;
+    margin: 25px;
+    margin-left: 0px;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(241, 249, 255);
+}
+
+.order-list {
+    min-height: 50px;
+    width: 250px;
+    border: solid black;
+    margin-top: 10px;
+}
+
+.login {
+    background-color: white;
 }
 
 .collection{
@@ -172,23 +284,53 @@ html {
     border: solid black;
     width: 300px;
     height: 100px;
-    padding: 10px;
+}
+
+.vouchers-container {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.points-container {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
 }
 
 .order-prog {
-    margin: 50px;
-    display: flex;
-    flex-direction: row;
+    margin: 25px;
+    padding-top: 10px;
     width: 100%;
     height: 120px;
 }
 
+.orders {
+    height: 100px;
+    width:100%;
+    margin-top: 10px;
+    border: solid black;
+}
+
 .figure-collection{
-    background-color: rgb(241, 249, 255);
-    margin: 50px;
-    border-radius: 5px;
-    padding: 40px;
+    margin: 25px;
     width: 100%;
+    height: 120px;
+}
+
+.figures {
+    height: 100px;
+    width:100%;
+    margin-top: 10px;
+    border: solid black;
+}
+
+#logout{
+    margin-top: 20px;
 }
 
 @media (max-width:576px){
@@ -201,6 +343,23 @@ html {
         flex-basis: 45%;
         flex-grow: 1;
         flex-grow: inherit;
+    }
+    .form-container {
+        margin-left: 2%;
+    }
+    .form-container-two {
+        width: 350px;
+        margin: 5%;
+        padding-left: 30px;
+    }
+    .left-container {
+        width: 80%;
+    }
+    .right-container {
+        width: 80%;
+    }
+    #method label{
+        margin-right: 15px;
     }
 }
 
