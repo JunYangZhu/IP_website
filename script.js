@@ -142,16 +142,18 @@ $(document).ready(function () {
 
     $("#login-submit").on("click",function (e) {
         e.preventDefault();
-        let inputName = $("#login-name").val();
-        let inputPassword = $("#login-pw").val();
-
-        window.location="home.html";
+        let inputName = $("#login-account-name").val();
+        let inputPassword = $("#login-account-pw").val();
+        
+    
         validateForm(inputName,inputPassword);
+        alert("Login unsuccessful. Please re-enter your account information")
+        location.reload();
     })
-
-    function validateForm(inputName,inputPassword){
-
-        var jsondata = {"name": accountName, "pw": accountPassword}
+    
+    function validateForm(inputName,inputPassword,limit=10){
+        console.log(`input: ${inputName}`);
+    
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -163,13 +165,19 @@ $(document).ready(function () {
                 "cache-control": "no-cache"
             }
         }
-
+    
         $.ajax(settings).done(function (response) {
-            console.log(response);
+      
+            for (var i = 0; i < response.length && i < limit; i++) {
+                console.log(`input: ${inputName}`);
+                console.log(`password: ${response[i].name}`);
+                if (inputName === `${response[i].name}` && inputPassword === `${response[i].pw}`){
+                    alert("You have successfully logged in.");
+                    window.location="home.html";
+                    break;
+                } 
+            }
         });
-
-        window.location="home.html";
-          
     }
 
     //[STEP 10]: Create our update listener
