@@ -5,7 +5,18 @@ header {
 }
 
 nav{
-    background-color: antiquewhite;
+    background-color: bisque;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+}
+
+.logo{
+    margin-left: 35%;
+    margin-right: 30%;
 }
 
 a {
@@ -126,7 +137,7 @@ textarea {
 }
 
 .login {
-    background-color: white;
+    background-color: rgb(162, 198, 255);
 }
 
 .collection{
@@ -211,7 +222,7 @@ img:focus {
 }
 
 .icons{
-    font-size: 180%;
+    font-size: 220%;
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -223,17 +234,6 @@ img:focus {
     margin-left: 78%;
     margin-bottom: 40px;
     padding: 1%;
-}
-
-.left {
-    display: flex;
-    flex-direction: row;
-}
-
-.right {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
 }
 
 html {
@@ -336,8 +336,17 @@ html {
 @media (max-width:576px){
     nav{
         display:flex;
-        flex-wrap: wrap;
+        flex-direction: row;
         font-size: 20px;
+    }
+    .icons{
+        font-size: 180%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .logo{
+        margin-right: 10%;
+        margin-left: 20%;
     }
     .item {
         flex-basis: 45%;
