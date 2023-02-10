@@ -147,8 +147,6 @@ $(document).ready(function () {
         
     
         validateForm(inputName,inputPassword);
-        alert("Login unsuccessful. Please re-enter your account information")
-        location.reload();
     })
     
     function validateForm(inputName,inputPassword,limit=10){
