@@ -150,7 +150,6 @@ $(document).ready(function () {
     })
     
     function validateForm(inputName,inputPassword,limit=10){
-        console.log(`input: ${inputName}`);
     
         var settings = {
             "async": true,
@@ -167,8 +166,6 @@ $(document).ready(function () {
         $.ajax(settings).done(function (response) {
       
             for (var i = 0; i < response.length && i < limit; i++) {
-                console.log(`input: ${inputName}`);
-                console.log(`password: ${response[i].name}`);
                 if (inputName === `${response[i].name}` && inputPassword === `${response[i].pw}`){
                     alert("You have successfully logged in.");
                     window.location="home.html";
