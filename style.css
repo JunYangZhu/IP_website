@@ -234,7 +234,7 @@ img:focus {
 .button {
     border: 1px solid rgb(0, 255, 119);
     background-color: white;
-    width: 85px;
+    width: 70px;
     margin-left: 78%;
     margin-bottom: 40px;
     padding: 1%;
@@ -373,6 +373,27 @@ html {
     }
     #method label{
         margin-right: 15px;
+    }
+    .contents{
+        margin-left: 30px;
+        margin-right: 30px;
+        padding: 25px;
+    }
+    .cart-list{
+        margin-left: 30px;
+        margin-right: 30px;
+        padding: 25px;
+    }
+    .collection{
+        margin-left: 30px;
+        margin-right: 30px;
+        padding: 25px;
+    }
+    .button{
+        margin-bottom: 20px;
+    }
+    #account-page{
+        margin-top: 20px;
     }
 }
 
