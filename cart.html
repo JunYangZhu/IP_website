@@ -42,11 +42,22 @@
                     <div class="info">
                         <h4>Item</h4>
                         <p>details</p>
+
+                        <div class="order-option">
+                            Quantity:
+                            <span id="quantity-field">
+                                <button id="up" onclick="setQuantity('up');">+</button>
+                                <input type="text" id="quantity" value="1">
+                                <button id="down" onclick="setQuantity('down');">-</button>
+                            </span>
+                        </div>
+
                         <p>price</p>
                     </div>
                 </div>                
             </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
     </body>
-    
 </html>

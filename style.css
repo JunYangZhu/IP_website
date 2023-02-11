@@ -212,13 +212,17 @@ img:focus {
     font-size: 20px;
 }
 
-.price{
+.price {
     color: aliceblue;
     background-color: rgb(0, 255, 119);
     width: 90%;
     padding: 4%;
     border-radius: 5px;
     font-size: 25px;
+}
+
+#quantity {
+    width: 50px;
 }
 
 .icons{
