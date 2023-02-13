@@ -14,6 +14,13 @@
         <div class="icons">
             <a href="account.html"><i class="fa-regular fa-circle-left"></i></a>
         </div>
+        <div id="pop-up" class="overlay">
+            <div class="overlay-content">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <h3>Insufficient points</h3>
+                <h3>for redemption</h3>
+            </div>
+        </div>
         <div class="collection">
             <div class="owned">
                 <h3>Your collection</h3>
@@ -30,7 +37,7 @@
                         </div>
                         <div class="info">
                             <h4>Cat in a pot</h4>
-                            <p class="price">1500 points</p>
+                            <p href="javascript:void(0)" id="insufficient" class="price" onclick="openNav()">750 points</p>
                         </div>
                     </div>
                     <div class="item">
@@ -39,7 +46,7 @@
                         </div>
                         <div class="info">
                             <h4>Cat (Sitting position)</h4>
-                            <p class="price">1500 points</p>
+                            <p href="javascript:void(0)" id="insufficient" class="price" onclick="openNav()">750 points</p>
                         </div>
                     </div>
                     <div class="item">
@@ -117,9 +124,13 @@
                 </section>
             </div>
         </div>
-        <div class="insufficient">
-            <h3>Insufficient points</h3>
-            <h3>for redemption</h3>
+        <div id="pop-up">
+            <div class="overlay">
+                <h3>Insufficient points</h3>
+                <h3>for redemption</h3>
+            </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

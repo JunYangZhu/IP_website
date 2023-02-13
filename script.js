@@ -8,10 +8,12 @@ $(document).ready(function () {
     $("#complete").hide();
     $("#dropdown").hide();
     $("#card-payment").hide();
+    createProfile();
   
     //Function to add new account to api database
     $("#account-submit").on("click", function (e) {
         e.preventDefault();
+        localStorage.clear();
     
         let accountName = $("#account-name").val();
         let accountEmail = $("#account-email").val();
@@ -35,21 +37,20 @@ $(document).ready(function () {
             },
             "processData": false,
             "data": JSON.stringify(jsondata),
-            "beforeSend": function(){
-            $("#account-submit").prop( "disabled", true);
-            $("#add-account-form").trigger("reset");
-            window.location="home.html"
-            }
         }
   
         //[STEP 5]: Send our ajax request over to the DB and print response of the RESTDB storage to console.
         $.ajax(settings).done(function (response) {
             console.log(response);
         
-            $("#account-submit").prop( "disabled", false);
-        
-            //@TODO update frontend UI 
-            $("#add-update-pw").show().fadeOut(3000);
+            let accountStorage = localStorage.getItem("account-name")
+                ? JSON.parse(localStorage.getItem("account-name"))
+                :[];
+            accountStorage.push(accountName);
+            localStorage.setItem("account-name", JSON.stringify(accountStorage));
+
+            alert("Account succesfully created");
+            window.location="home.html";
         });
     });
     
@@ -70,6 +71,7 @@ $(document).ready(function () {
     //Function to check if users input matches an existing account
     $("#login-submit").on("click",function (e) {
         e.preventDefault();
+        localStorage.clear();
         let inputName = $("#login-account-name").val();
         let inputPassword = $("#login-account-pw").val();
         
@@ -108,7 +110,41 @@ $(document).ready(function () {
             }
         });
     }
-  
+    
+    //Function to save login information in localStorage and display information on profile page
+    function createProfile(limit = 10) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/account",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function(response) {
+    
+            content = ""
+        
+            for (var i = 0; i < response.length && i < limit; i++) {
+                username = localStorage.getItem("account-name")
+                username = username.replace('["', '')
+                username = username.replace('"]', '')
+                if (username === `${response[i].name}`) {
+                content = `<h2 class='account-name'>${response[i].name}</h2>
+                <h2 class='membership-rank'>BRONZE</h2>
+                <p class='account-email'>${response[i].email}</p>`;
+                }
+                console.log(username);
+        
+                $(".details").html(content);
+                console.log(content);
+            }
+        });
+    }
 });
 
 //Functions to switch forms in checkout
@@ -121,7 +157,7 @@ $("#next-button").on("click",function (e) {
 $("#checkout-submit").on("click",function (e) {
     e.preventDefault();
     $("#payment").hide();
-    $("#complete").show();
+    $("#error").show();
 })
 
 $("#hover").on("hover",function (e) {
@@ -149,7 +185,6 @@ $("#apple").on("click",function (e) {
 //Function to exit page and logout
 $("#logout").on("click",function (e) {
     e.preventDefault();
-    localStorage.clear();
     window.location="index.html";
 })
 
@@ -164,4 +199,12 @@ function setQuantity(upordown) {
         if (upordown == 'up'){++document.getElementById('quantity').value;}}
     else
         {document.getElementById('quantity').value=1;}
+}
+
+function openNav() {
+    document.getElementById("pop-up").style.width = "100%";
+}
+
+function closeNav() {
+    document.getElementById("pop-up").style.width = "0%";
 }
