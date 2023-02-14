@@ -5,7 +5,7 @@ $(document).ready(function () {
     $("#add-update-pw").hide();
     $("#account-data").hide();
     $("#payment").hide();
-    $("#complete").hide();
+    $("#error").hide();
     $("#dropdown").hide();
     $("#card-payment").hide();
     createProfile();
@@ -145,6 +145,71 @@ $(document).ready(function () {
             }
         });
     }
+
+    //Function to load up product details
+    $(".pdt").on("click", function(e) {
+        e.preventDefault;
+        var text = $(e.target).text();
+        formPdt(text);
+      
+    })
+
+    function formPdt(text, limit=100) {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/products",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function (response) {
+            
+            for (var i = 0; i < response.length && i < limit; i++){
+                if (text === `${response[i].pdt}`){
+                    let content = "";
+                    sizes = "";
+                    colours = "";
+    
+                    front = `<div class="pdt-img"><img src="${response[i].img}"></div>
+                    <div class="pdt-form"><form>
+                    <h4 id="pdt">${response[i].pdt}</h4>
+                    <div class="form-group" id="size-option"><div>`
+                    
+                    if (`${response[i].size}`!= "undefined") {
+                        
+                        sizes += `<input type="radio" id="${response[i].size}">${response[i].size}`
+
+                    }
+                    sizeEnd = `</div></div><div class="form-group" id="colour-option"><div>`
+    
+                    if (`${response[i].size}`!= "undefined") {
+                        
+                        colours += `<input type="radio" id="${response[i].colour}">${response[i].colour}`
+
+                    }
+    
+                    end = `</div></div><div class="form-group" id="qty-option">Quantity:<span id="quantity-field">
+                    <button id="up" onclick="setQuantity('up');">+</button>
+                    <input type="text" id="quantity" value="1">
+                    <button id="down" onclick="setQuantity('down');">-</button></span>
+                    <p class="pdt-price">$${response[i].price}</p></div>
+                    <input type="submit" value="ADD TO CART"></form></div>`
+    
+                    content = front + sizes + sizeEnd + colours + end
+                    $(".pdt-container").html(content);
+                    document.getElementById("pop-up").style.width = "100%";
+    
+                }
+            }
+        })
+    }
+
 });
 
 //Functions to switch forms in checkout
@@ -190,15 +255,15 @@ $("#logout").on("click",function (e) {
 
 //Function for quantity button
 function setQuantity(upordown) {
-    var quantity = document.getElementById('quantity');
+    var quantity = document.getElementById('pdt-quantity');
 
     if (quantity.value > 1) {
-        if (upordown == 'up'){++document.getElementById('quantity').value;}
-        else if (upordown == 'down'){--document.getElementById('quantity').value;}}
+        if (upordown == 'up'){++document.getElementById('pdt-quantity').value;}
+        else if (upordown == 'down'){--document.getElementById('pdt-quantity').value;}}
     else if (quantity.value == 1) {
-        if (upordown == 'up'){++document.getElementById('quantity').value;}}
+        if (upordown == 'up'){++document.getElementById('pdt-quantity').value;}}
     else
-        {document.getElementById('quantity').value=1;}
+        {document.getElementById('pdt-quantity').value=1;}
 }
 
 function openNav() {
@@ -206,5 +271,9 @@ function openNav() {
 }
 
 function closeNav() {
+    document.getElementById("pop-up").style.width = "0%";
+}
+
+function closePdt() {
     document.getElementById("pop-up").style.width = "0%";
 }

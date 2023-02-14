@@ -48,6 +48,7 @@ a {
     padding: 50px;
     margin-top: 150px;
     margin-left: 10%;
+    margin-bottom: 100px;
 }
 
 .form-group {
@@ -222,6 +223,11 @@ img:focus {
     cursor: pointer;
 }
 
+.pdt {
+    cursor: pointer;
+}
+
+
 .price {
     color: aliceblue;
     background-color: rgb(0, 255, 119);
@@ -229,9 +235,10 @@ img:focus {
     padding: 4%;
     border-radius: 5px;
     font-size: 25px;
+    cursor: pointer;
 }
 
-#quantity {
+#pdt-quantity {
     width: 24px;
     text-align: center;
 }
@@ -379,6 +386,22 @@ html {
     transition: 0.5s;
 }
 
+.overlay-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
 .overlay-content {
     width:350px;
     height:220px;
@@ -389,9 +412,34 @@ html {
     top: 25%;
 }
 
+.overlay-product {
+    width:80%;
+    background-color: rgb(241, 249, 255);
+    margin-top: 5%;
+    padding: 5%;
+    margin-bottom: 5%;
+}
+
+.pdt-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.pdt-form {
+    margin-left: 20px;
+}
+
+#size-option {
+    min-height: 15px;
+}
+
+#colour-option {
+    min-height: 15px;
+}
+
 .closebtn {
     font-size: 60px !important;
-    margin-left: 280px;
+    margin-left: 85%;
 }
 
 .products {
@@ -502,5 +550,8 @@ html {
     #logout{
         margin-left: 78%;
     }
+    .pdt-container{
+        flex-direction: column;
+        margin-left: 10%;
+    }
 }
-
