@@ -9,6 +9,8 @@ $(document).ready(function () {
     $("#dropdown").hide();
     $("#card-payment").hide();
     createProfile();
+    cartList();
+    checkoutList();
   
     //Function to add new account to api database
     $("#account-submit").on("click", function (e) {
@@ -138,10 +140,8 @@ $(document).ready(function () {
                 <h2 class='membership-rank'>BRONZE</h2>
                 <p class='account-email'>${response[i].email}</p>`;
                 }
-                console.log(username);
         
                 $(".details").html(content);
-                console.log(content);
             }
         });
     }
@@ -195,11 +195,11 @@ $(document).ready(function () {
                     }
     
                     end = `</div></div><div class="form-group" id="qty-option">Quantity:<span id="quantity-field">
-                    <button id="up" onclick="setQuantity('up');">+</button>
-                    <input type="text" id="quantity" value="1">
-                    <button id="down" onclick="setQuantity('down');">-</button></span>
+                    <button type="button" id="up" onclick="setQuantity('up');">+</button>
+                    <input type="text" id="pdt-quantity" value="1">
+                    <button type="button" id="down" onclick="setQuantity('down');">-</button></span>
                     <p class="pdt-price">$${response[i].price}</p></div>
-                    <input type="submit" value="ADD TO CART"></form></div>`
+                    <input id="pdt-submit" type="submit" value="ADD TO CART"></form></div>`
     
                     content = front + sizes + sizeEnd + colours + end
                     $(".pdt-container").html(content);
@@ -207,6 +207,150 @@ $(document).ready(function () {
     
                 }
             }
+        })
+    }
+
+    $(".pdt").on("click", function(e) {
+        e.preventDefault();
+        var text = $(e.target).text();
+        formPdt(text);
+      
+    })
+
+    $("#pdt-close").on("click", function(e) {
+        e.preventDefault();
+        document.getElementById("pop-up").style.width = "0%";
+
+    })
+
+    $("#pdt-submit").on("click", function (e) {
+        //prevent default action of the button 
+        e.preventDefault();
+        console.log("submit")
+        let pdtName = $("#pdt-name").val();
+        let pdtImg = $(".pdt-img").val();
+        let pdtQty = $("#pdt-quantity").val();
+        let pdtPrice =$("#pdt-price").val();
+
+        console.log(pdtName);
+        console.log(pdtImg);
+        console.log(pdtQty);
+        console.log(pdtPrice);
+
+    
+        let jsondata = {
+            "pdt": pdtName,
+            "img": pdtImg,
+            "qty": pdtQty,
+            "price": pdtPrice,
+        };
+
+        let settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
+            "method": "POST",
+            "headers": {
+            "content-type": "application/json",
+            "x-apikey": APIKEY,
+            "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify(jsondata),
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        })
+    });
+
+    function cartList(limit = 20) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function(response) {
+    
+            content = "";
+
+            for (var i = 0; i < response.length && i < limit; i++) {
+                
+                front = `<div class="item-cart" id="${response[i].id}" >
+                <div class="img"><img id="${response[i].id}" src="${response[i].img}"></div>
+                <div class="info"><p id="${response[i].id}">${response[i].pdt}</p>`
+
+                if ((`${response[i].size}` != "undefined") && (`${response[i].colour}` != "undefined")) {
+                    details = `<p id="${response[i].id}" class="cart-details>${response[i].size},${response[i].colour}</p>`
+                } else if (`${response[i].size}` != "undefined") {
+                    details = `<p id="${response[i].id}" class="cart-details>${response[i].size}</p>`
+                } else if (`${response[i].colour}` != "undefined") {
+                    details = `<p id="${response[i].id}" class="cart-details>${response[i].colour}</p>`
+                } else {
+                    details = `<p class="cart-details></p>`
+                }
+
+                end = `<div class="order-option" id="${response[i].id}">Quantity:
+                <span id="quantity-field" id="${response[i].id}"><button id="${response[i].id}" class="up" onclick="setQuantity('up');">+</button>
+                <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button id="${response[i].id}" class="down" onclick="setQuantity('down');">-</button>
+                </span><p class="cart-price">$${response[i].total}</p></div></div></div>`
+
+                cartItem = front + details + end
+                content += cartItem
+            }
+            $(".list").html(content);
+        })
+    }
+
+    function checkoutList(limit = 20) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function(response) {
+    
+            content = "";
+
+            for (var i = 0; i < response.length && i < limit; i++) {
+                
+                front = `<div class="checkout-item">
+                <div><img class="checkout-img" src="${response[i].img}"></div>
+                <div class="checkout-info"><p>${response[i].qty}x ${response[i].pdt} `
+
+                console.log(`${response[i].size}`)
+
+                if ((`${response[i].size}` != "") && (`${response[i].colour}` != "")) {
+                    details = `- ${response[i].size} (${response[i].colour})</p>`
+                } else if (`${response[i].size}` != "") {
+                    details = `- ${response[i].size}</p>`
+                } else if (`${response[i].colour}` != "") {
+                    details = `(${response[i].colour})</p>`
+                } else {
+                    details = `</p>`
+                }
+
+                end = `<p class"checkout-price">$${response[i].total}</p></div></div>`
+
+                checkoutItem = front + details + end
+                console.log(checkoutItem)
+                content += checkoutItem
+            }
+            $(".order-list").html(content);
         })
     }
 
