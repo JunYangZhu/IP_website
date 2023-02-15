@@ -11,6 +11,8 @@ $(document).ready(function () {
     createProfile();
     cartList();
     checkoutList();
+    wishList();
+    recentList();
   
     //Function to add new account to api database
     $("#account-submit").on("click", function (e) {
@@ -146,15 +148,20 @@ $(document).ready(function () {
         });
     }
 
-    //Function to load up product details
+    //Function to load up product details and save to recently view using local storage
     $(".pdt").on("click", function(e) {
-        e.preventDefault;
+        e.preventDefault();
         var text = $(e.target).text();
+        let recentStorage = localStorage.getItem("recent")
+            ? JSON.parse(localStorage.getItem("recent"))
+            :[];
+        recentStorage.push(text);
+        localStorage.setItem("recent", JSON.stringify(recentStorage));
         formPdt(text);
       
     })
 
-    function formPdt(text, limit=100) {
+    function formPdt(text, limit=50) {
 
         var settings = {
             "async": true,
@@ -178,19 +185,19 @@ $(document).ready(function () {
     
                     front = `<div class="pdt-img"><img src="${response[i].img}"></div>
                     <div class="pdt-form"><form>
-                    <h4 id="pdt">${response[i].pdt}</h4>
+                    <h4 id="pdt-name">${response[i].pdt}</h4>
                     <div class="form-group" id="size-option"><div>`
                     
                     if (`${response[i].size}`!= "undefined") {
                         
-                        sizes += `<input type="radio" id="${response[i].size}">${response[i].size}`
+                        sizes += `<input type="radio" name="size" id="${response[i].size}">${response[i].size}`
 
                     }
                     sizeEnd = `</div></div><div class="form-group" id="colour-option"><div>`
     
                     if (`${response[i].size}`!= "undefined") {
                         
-                        colours += `<input type="radio" id="${response[i].colour}">${response[i].colour}`
+                        colours += `<input type="radio" name="colour" id="${response[i].colour}">${response[i].colour}`
 
                     }
     
@@ -199,7 +206,8 @@ $(document).ready(function () {
                     <input type="text" id="pdt-quantity" value="1">
                     <button type="button" id="down" onclick="setQuantity('down');">-</button></span>
                     <p class="pdt-price">$${response[i].price}</p></div>
-                    <input id="pdt-submit" type="submit" value="ADD TO CART"></form></div>`
+                    <div class="form-end"><input type="button" id="pdt-submit" value="ADD TO CART">
+                    <a class="add-wish"><i class="fa-solid fa-star"></i></a></div></form></div>`
     
                     content = front + sizes + sizeEnd + colours + end
                     $(".pdt-container").html(content);
@@ -210,21 +218,27 @@ $(document).ready(function () {
         })
     }
 
-    $(".pdt").on("click", function(e) {
+    //Function to add product to wishlist using local storage
+    $(".add-wish").on("click", function(e) {
         e.preventDefault();
         var text = $(e.target).text();
-        formPdt(text);
+        let wishStorage = localStorage.getItem("wish")
+            ? JSON.parse(localStorage.getItem("wish"))
+            :[];
+        wishStorage.push(text);
+        localStorage.setItem("wish", JSON.stringify(recentStorage));
       
     })
 
-    $("#pdt-close").on("click", function(e) {
+    //Function to close overlay
+    $(".close-btn").on("click", function(e) {
         e.preventDefault();
         document.getElementById("pop-up").style.width = "0%";
 
     })
 
-    $("#pdt-submit").on("click", function (e) {
-        //prevent default action of the button 
+    //Function to upload product details to cart api
+    $("#pdt-submit").on("click", function (e) { 
         e.preventDefault();
         console.log("submit")
         let pdtName = $("#pdt-name").val();
@@ -264,7 +278,8 @@ $(document).ready(function () {
         })
     });
 
-    function cartList(limit = 20) {
+    //Function to load cart api items to cart
+    function cartList(limit = 15) {
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -284,20 +299,20 @@ $(document).ready(function () {
             for (var i = 0; i < response.length && i < limit; i++) {
                 
                 front = `<div class="item-cart" id="${response[i].id}" >
-                <div class="img"><img id="${response[i].id}" src="${response[i].img}"></div>
-                <div class="info"><p id="${response[i].id}">${response[i].pdt}</p>`
+                <div class="img"><img src="${response[i].img}"></div>
+                <div class="info"><p>${response[i].pdt}</p>`
 
                 if ((`${response[i].size}` != "undefined") && (`${response[i].colour}` != "undefined")) {
-                    details = `<p id="${response[i].id}" class="cart-details>${response[i].size},${response[i].colour}</p>`
+                    details = `<p class="cart-details>${response[i].size},${response[i].colour}</p>`
                 } else if (`${response[i].size}` != "undefined") {
-                    details = `<p id="${response[i].id}" class="cart-details>${response[i].size}</p>`
+                    details = `<p class="cart-details>${response[i].size}</p>`
                 } else if (`${response[i].colour}` != "undefined") {
-                    details = `<p id="${response[i].id}" class="cart-details>${response[i].colour}</p>`
+                    details = `<p class="cart-details>${response[i].colour}</p>`
                 } else {
                     details = `<p class="cart-details></p>`
                 }
 
-                end = `<div class="order-option" id="${response[i].id}">Quantity:
+                end = `<div class="order-option">Quantity:
                 <span id="quantity-field" id="${response[i].id}"><button id="${response[i].id}" class="up" onclick="setQuantity('up');">+</button>
                 <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button id="${response[i].id}" class="down" onclick="setQuantity('down');">-</button>
                 </span><p class="cart-price">$${response[i].total}</p></div></div></div>`
@@ -309,7 +324,8 @@ $(document).ready(function () {
         })
     }
 
-    function checkoutList(limit = 20) {
+    //Function to load cart api items for checkout
+    function checkoutList(limit = 15) {
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -332,8 +348,6 @@ $(document).ready(function () {
                 <div><img class="checkout-img" src="${response[i].img}"></div>
                 <div class="checkout-info"><p>${response[i].qty}x ${response[i].pdt} `
 
-                console.log(`${response[i].size}`)
-
                 if ((`${response[i].size}` != "") && (`${response[i].colour}` != "")) {
                     details = `- ${response[i].size} (${response[i].colour})</p>`
                 } else if (`${response[i].size}` != "") {
@@ -354,6 +368,85 @@ $(document).ready(function () {
         })
     }
 
+    //Function to load out recently viewed
+    function recentList(limit = 50) {
+        recents = localStorage.getItem("recent")
+        recents = recents.replace(/[^\w ,]/g, '')
+        recent = recents.split(",")
+        recent = recent.reverse()
+        console.log(recent);
+        
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/product",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function(response) {
+    
+            content = ""
+        
+            for (var i = 0; i < response.length && i < limit; i++) {
+                
+                for (var a = 0; a< response.length && a < 4; a++) {
+                    if (recent[a] === `${response[i].pdt}`) {
+                        content += `<div class="box-2">
+                        <img class="box-img" src="${response[i].img}">
+                        <p class="box-price"$>${response[i].price}</p></div>`
+                    }
+                }
+            }
+            
+            $("#recent").html(content);
+        })
+    }
+
+    //Function to load out wishlist
+    function wishList(limit = 50) {
+        wish = localStorage.getItem("wish")
+        wish = wish.replace(/[^\w ,]/g, '')
+        wishlist = wish.split(",")
+        wishlist = wishlist.reverse()
+        console.log(wishlist);
+        
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://catnapaccounts-4ec8.restdb.io/rest/product",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            }
+        }
+    
+        $.ajax(settings).done(function(response) {
+    
+            content = ""
+        
+            for (var i = 0; i < response.length && i < limit; i++) {
+                
+                for (var a = 0; a< response.length && a < 4; a++) {
+                    if (wishlist[a] === `${response[i].pdt}`) {
+                        content += `<div class="box-2">
+                        <img class="box-img" src="${response[i].img}">
+                        <p class="box-price"$>${response[i].price}</p></div>`
+                    }
+                }
+            }
+            
+            $("#wish").html(content);
+        })
+    }
 });
 
 //Functions to switch forms in checkout
@@ -367,11 +460,6 @@ $("#checkout-submit").on("click",function (e) {
     e.preventDefault();
     $("#payment").hide();
     $("#error").show();
-})
-
-$("#hover").on("hover",function (e) {
-    e.preventDefault();
-    $("#dropdown").show();
 })
 
 //Function to pop out form to enter card information
@@ -408,16 +496,4 @@ function setQuantity(upordown) {
         if (upordown == 'up'){++document.getElementById('pdt-quantity').value;}}
     else
         {document.getElementById('pdt-quantity').value=1;}
-}
-
-function openNav() {
-    document.getElementById("pop-up").style.width = "100%";
-}
-
-function closeNav() {
-    document.getElementById("pop-up").style.width = "0%";
-}
-
-function closePdt() {
-    document.getElementById("pop-up").style.width = "0%";
 }
