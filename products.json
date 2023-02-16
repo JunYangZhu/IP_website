@@ -3,222 +3,122 @@
         {
             "_id": "63eb2f0662144c690001c427",
             "pdt": "Multi-feeder",
-            "img": "img/placeholder.jfif",
-            "price": 17.48,
-            "_created": "2023-02-14T06:49:42.921Z",
-            "_changed": "2023-02-14T06:49:42.921Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/multi_feeder.jpg",
+            "price": 17.48
         },
         {
             "_id": "63eb2e1a62144c690001c361",
             "pdt": "Stainless steel Food bowl",
             "price": 14.45,
-            "_created": "2023-02-14T06:45:46.637Z",
-            "_changed": "2023-02-14T06:49:17.876Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 3,
-            "img": "img/placeholder.jfif"
+            "img": "img/stainless.jpg"
         },
         {
             "_id": "63eb2f2c62144c690001c430",
             "pdt": "Coloured Durable Food bowl",
-            "img": "img/placeholder.jfif",
-            "price": 16.37,
-            "_created": "2023-02-14T06:50:20.569Z",
-            "_changed": "2023-02-14T06:50:20.569Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/dog_bowl.jpg",
+            "price": 16.37
         },
         {
             "_id": "63eb2f5e62144c690001c432",
-            "pdt": "Food bowl diner set",
-            "img": "img/placeholder.jfif",
-            "price": 25.47,
-            "_created": "2023-02-14T06:51:10.139Z",
-            "_changed": "2023-02-14T06:51:10.139Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "pdt": "Double Feeding Dish",
+            "img": "img/double_feeding.jpg",
+            "price": 25.47
         },
         {
             "_id": "63eb2f8562144c690001c434",
             "pdt": "Fountain",
-            "img": "img/placeholder.jfif",
-            "price": 57.73,
-            "_created": "2023-02-14T06:51:49.164Z",
-            "_changed": "2023-02-14T06:51:49.164Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/fountain.jpg",
+            "price": 57.73
         },
         {
             "_id": "63eb2fa062144c690001c436",
             "pdt": "Flower Fountain",
-            "img": "img/placeholder.jfif",
-            "price": 78.15,
-            "_created": "2023-02-14T06:52:16.004Z",
-            "_changed": "2023-02-14T06:52:16.004Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/flower_fountain.jpg",
+            "price": 78.15
         },
         {
             "_id": "63eb2fdd62144c690001c439",
             "pdt": "Dog collars",
-            "img": "img/placeholder.jfif",
-            "price": 7.7,
-            "_created": "2023-02-14T06:53:17.414Z",
-            "_changed": "2023-02-14T06:53:25.100Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 1
+            "img": "img/dog_collar.jpg",
+            "price": 7.70
         },
         {
             "_id": "63eb2ffb62144c690001c43c",
             "pdt": "Leads",
-            "img": "img/placeholder.jfif",
-            "price": 14.93,
-            "_created": "2023-02-14T06:53:47.722Z",
-            "_changed": "2023-02-14T06:53:47.722Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/dog_lead.jpg",
+            "price": 14.93
         },
         {
             "_id": "63eb301162144c690001c43e",
             "pdt": "Dog harness",
-            "img": "img/placeholder.jfif",
-            "price": 18.3,
-            "_created": "2023-02-14T06:54:09.541Z",
-            "_changed": "2023-02-14T06:54:14.413Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 1
+            "img": "img/dog_harness.jpg",
+            "price": 18.30
         },
         {
             "_id": "63eb303062144c690001c441",
             "pdt": "Chew toy for dogs",
-            "img": "img/placeholder.jfif",
-            "price": 6.3,
-            "_created": "2023-02-14T06:54:40.707Z",
-            "_changed": "2023-02-14T06:54:40.707Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/chew_toy.jpg",
+            "price": 6.30
         },
         {
             "_id": "63eb305262144c690001c443",
             "pdt": "Dog beds",
-            "img": "img/placeholder.jfif",
-            "price": 71.4,
-            "_created": "2023-02-14T06:55:14.281Z",
-            "_changed": "2023-02-14T06:55:35.046Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 2
+            "img": "img/dog_bed.jpg",
+            "price": 71.40
         },
         {
             "_id": "63eb308b62144c690001c447",
             "pdt": "Cat ajustable collar",
-            "img": "img/placeholder.jfif",
-            "price": 8.19,
-            "_created": "2023-02-14T06:56:11.375Z",
-            "_changed": "2023-02-14T06:56:11.375Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/cat_lead.jpg",
+            "price": 8.19
         },
         {
             "_id": "63eb30a062144c690001c449",
             "pdt": "Cat Harness & Lead",
-            "img": "img/placeholder.jfif",
-            "price": 18.78,
-            "_created": "2023-02-14T06:56:32.892Z",
-            "_changed": "2023-02-14T06:56:32.892Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/cat_lead.jpg",
+            "price": 18.78
         },
         {
             "_id": "63eb30bc62144c690001c44b",
             "pdt": "Scratching Post",
-            "img": "img/placeholder.jfif",
-            "price": 17,
-            "_created": "2023-02-14T06:57:00.193Z",
-            "_changed": "2023-02-14T06:57:12.104Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 1
+            "img": "img/scratching_post.jpg",
+            "price": 17.00
         },
         {
             "_id": "63eb30dd62144c690001c44e",
             "pdt": "Cat tower",
-            "img": "img/placeholder.jfif",
-            "price": 209.93,
-            "_created": "2023-02-14T06:57:33.237Z",
-            "_changed": "2023-02-14T06:57:33.237Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/cat_tower.jpg",
+            "price": 209.93
         },
         {
             "_id": "63eb30ee62144c690001c450",
             "pdt": "Pet Carrier",
-            "img": "img/placeholder.jfif",
-            "price": 39.48,
-            "_created": "2023-02-14T06:57:50.134Z",
-            "_changed": "2023-02-14T06:57:50.134Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/carrier.jpg",
+            "price": 39.48
         },
         {
             "_id": "63eb310162144c690001c454",
             "pdt": "Cooling Bed",
-            "img": "img/placeholder.jfif",
-            "price": 47.67,
-            "_created": "2023-02-14T06:58:09.123Z",
-            "_changed": "2023-02-14T06:58:09.123Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/cooling_bed.jpg",
+            "price": 47.67
         },
         {
             "_id": "63eb311662144c690001c456",
             "pdt": "Cat dome bed",
-            "img": "img/placeholder.jfif",
-            "price": 104,
-            "_created": "2023-02-14T06:58:30.165Z",
-            "_changed": "2023-02-14T06:58:30.165Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/dome_bed.jpg",
+            "price": 104.00
         },
         {
             "_id": "63eb312a62144c690001c458",
             "pdt": "Cat toy stick",
-            "img": "img/placeholder.jfif",
-            "price": 16.95,
-            "_created": "2023-02-14T06:58:50.711Z",
-            "_changed": "2023-02-14T06:58:50.711Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/toy_stick.jpg",
+            "price": 16.95
         },
         {
             "_id": "63eb314d62144c690001c45a",
             "pdt": "Cat Food Tree",
-            "img": "img/placeholder.jfif",
-            "price": 42.75,
-            "_created": "2023-02-14T06:59:25.732Z",
-            "_changed": "2023-02-14T06:59:25.732Z",
-            "_createdby": "s10248393@connect.np.edu.sg",
-            "_changedby": "s10248393@connect.np.edu.sg",
-            "_version": 0
+            "img": "img/food_tree.jpg",
+            "price": 42.75
         }
     ]
 }

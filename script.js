@@ -54,8 +54,7 @@ $(document).ready(function () {
             accountStorage.push(accountName);
             localStorage.setItem("account-name", JSON.stringify(accountStorage));
 
-            alert("Account succesfully created");
-            window.location="home.html";
+            window.location="loading.html";
         });
     });
     
@@ -108,8 +107,7 @@ $(document).ready(function () {
                     accountStorage.push(inputName);
                     localStorage.setItem("account-name", JSON.stringify(accountStorage));
 
-                    alert("You have successfully logged in.");
-                    window.location="home.html";
+                    window.location="loading.html";
                     break;
                 } 
             }
@@ -576,189 +574,190 @@ $(document).ready(function () {
             $(".fig-container").html(content);
         }
     }
-});
+    //Functions to switch forms in checkout
+    $("#next-button").on("click",function (e) {
+        e.preventDefault();
+        localStorage.clear("price")
+        total = document.getElementById("total").innerHTML
+        retail = document.getElementById("retail").innerHTML
+        subtotal = document.getElementById("subtotal").innerHTML
+        shipping = document.getElementById("shipping").innerHTML
+        shipGuarantee = document.getElementById("ship-guarantee").innerHTML
+        content = total + "," + retail + "," + subtotal + ", " + shipping + "," + shipGuarantee
+        let priceStorage = localStorage.getItem("price")
+            ? JSON.parse(localStorage.getItem("price"))
+                :[];
+            priceStorage.push(content);
+            localStorage.setItem("price", JSON.stringify(priceStorage));
 
-//Functions to switch forms in checkout
-$("#next-button").on("click",function (e) {
-    e.preventDefault();
-    localStorage.clear("price")
-    total = document.getElementById("total").innerHTML
-    retail = document.getElementById("retail").innerHTML
-    subtotal = document.getElementById("subtotal").innerHTML
-    shipping = document.getElementById("shipping").innerHTML
-    shipGuarantee = document.getElementById("ship-guarantee").innerHTML
-    content = total + "," + retail + "," + subtotal + ", " + shipping + "," + shipGuarantee
-    let priceStorage = localStorage.getItem("price")
-        ? JSON.parse(localStorage.getItem("price"))
-            :[];
-        priceStorage.push(content);
-        localStorage.setItem("price", JSON.stringify(priceStorage));
+        $("#checkout").hide();
+        $("#payment").show();
+        prices = localStorage.getItem("price")
+        prices = prices.replace('["',"")
+        prices = prices.replace('"]',"")
+        prices = prices.split(",")
+        $("#final-total").html(prices[0])
+    })
 
-    $("#checkout").hide();
-    $("#payment").show();
-    prices = localStorage.getItem("price")
-    prices = prices.replace('["',"")
-    prices = prices.replace('"]',"")
-    prices = prices.split(",")
-    $("#final-total").html(prices[0])
-})
+    $("#back-checkout").on("click",function (e) {
+        $("#payment").hide();
+        $("#checkout").show();
+        prices = localStorage.getItem("price")
+        prices = prices.replace('["',"")
+        prices = prices.replace('"]',"")
+        prices = prices.split(",")
+        $("#total").html(prices[0])
+        $("#retail").html(prices[1])
+        $("#subtotal").html(prices[2])
+        $("#shipping").html(prices[3])
+        $("#ship-guarantee").html(prices[4])
+    })
 
-$("#back-checkout").on("click",function (e) {
-    $("#payment").hide();
-    $("#checkout").show();
-    prices = localStorage.getItem("price")
-    prices = prices.replace('["',"")
-    prices = prices.replace('"]',"")
-    prices = prices.split(",")
-    $("#total").html(prices[0])
-    $("#retail").html(prices[1])
-    $("#subtotal").html(prices[2])
-    $("#shipping").html(prices[3])
-    $("#ship-guarantee").html(prices[4])
-})
+    $("#checkout-submit").on("click",function (e) {
+        e.preventDefault();
+        $("#payment").hide();
+        $("#error").show();
+    })
 
-$("#checkout-submit").on("click",function (e) {
-    e.preventDefault();
-    $("#payment").hide();
-    $("#error").show();
-})
+    //Function to pop out form to enter card information
+    $("#card").on("click",function (e) {
+        $("#card-payment").show();
+    })
 
-//Function to pop out form to enter card information
-$("#card").on("click",function (e) {
-    $("#card-payment").show();
-})
+    //Functions to remove card info form
+    $("#grab").on("click",function (e) {
+        $("#card-payment").hide();
+    })
 
-//Functions to remove card info form
-$("#grab").on("click",function (e) {
-    $("#card-payment").hide();
-})
+    $("#apple").on("click",function (e) {
+        $("#card-payment").hide();
+    })
 
-$("#apple").on("click",function (e) {
-    $("#card-payment").hide();
-})
+    //Function to exit page and logout
+    $("#logout").on("click",function (e) {
+        e.preventDefault();
+        window.location="index.html";
+    })
 
-//Function to exit page and logout
-$("#logout").on("click",function (e) {
-    e.preventDefault();
-    window.location="index.html";
-})
+    //Function to bring out overlay
+    $(".item").on("click", "#insufficient", function(e) {
+        e.preventDefault();
+        document.getElementById("pop-up").style.width = "100%";
+    })
 
-//Function to bring out overlay
-$(".item").on("click", "#insufficient", function(e) {
-    e.preventDefault();
-    document.getElementById("pop-up").style.width = "100%";
-})
+    //Function to open figure details
+    $(".item").on("click", function (e) {
+        localStorage.clear("fig")
+        console.log(this.id);
+        call = this.id
+        if (call == "fig1" || call == "fig2") {
+            let figStorage = localStorage.getItem("fig")
+            ? JSON.parse(localStorage.getItem("fig"))
+                :[];
+            figStorage.push(this.id);
+            localStorage.setItem("fig", JSON.stringify(figStorage));
 
-//Function to open figure details
-$(".item").on("click", function (e) {
-    localStorage.clear("fig")
-    console.log(this.id);
-    call = this.id
-    if (call == "fig1" || call == "fig2") {
-        let figStorage = localStorage.getItem("fig")
-        ? JSON.parse(localStorage.getItem("fig"))
-            :[];
-        figStorage.push(this.id);
-        localStorage.setItem("fig", JSON.stringify(figStorage));
+            window.location = "figure.html";
+        }
 
-        window.location = "figure.html";
-    }
+    })
 
-})
+    $("#voucher").on("click", function(e) {
+        e.preventDefault();
+        if (this.value == "") {
+            this.value = "CATNAP3429A"
+            total = document.getElementById("total").innerHTML
+            total = total.replace("$","")
+            discount = total - total/20
+            content = "(Discounted) $" + discount
+            index = content.indexOf(".")
+            index = index + 3
+            content = content.slice(0,index)
 
-$("#voucher").on("click", function(e) {
-    e.preventDefault();
-    if (this.value == "") {
-        this.value = "CATNAP3429A"
+            $("#total").html(content)
+        } else if (this.value == "CATNAP3429A") {
+            this.value = ""
+            total = document.getElementById("total").innerHTML
+            total = total.replace("(Discounted) $","")
+            discount = total/19*20
+            content = "$" + discount
+            index = content.indexOf(".")
+            index = index + 3
+            content = content.slice(0,index)
+
+            $("#total").html(content)
+        }
+    })
+
+    //Function for shipping method
+    $("#standard").on("click", function (e) {
+        value = "$1"
+        if (document.getElementById("shipping").innerHTML != 0) {
+            remove = document.getElementById("shipping").innerHTML
+            remove = remove.replace("$","")
+        } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+            remove = document.getElementById("ship-guarantee").innerHTML
+            remove = remove.replace("$","")
+        } else {remove = 0}
+        cancel = "0"
         total = document.getElementById("total").innerHTML
         total = total.replace("$","")
-        discount = total - total/20
-        content = "(Discounted) $" + discount
-        index = content.indexOf(".")
+        total = Number(total) + 1.00 - Number(remove)
+        total = "$" + total
+        index = total.indexOf(".")
         index = index + 3
-        content = content.slice(0,index)
+        total = total.slice(0,index)
+        $("#shipping").html(value);
+        $("#ship-guarantee").html(cancel);
+        $("#total").html(total);
+    })
 
-        $("#total").html(content)
-    } else if (this.value == "CATNAP3429A") {
-        this.value = ""
+    $("#express").on("click", function (e) {
+        value = "$5"
+        if (document.getElementById("shipping").innerHTML != 0) {
+            remove = document.getElementById("shipping").innerHTML
+            remove = remove.replace("$","")
+        } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+            remove = document.getElementById("ship-guarantee").innerHTML
+            remove = remove.replace("$","")
+        } else {remove = 0}
+        cancel = "0"
         total = document.getElementById("total").innerHTML
-        total = total.replace("(Discounted) $","")
-        discount = total/19*20
-        content = "$" + discount
-        index = content.indexOf(".")
+        total = total.replace("$","")
+        total = Number(total) + 5.00 - Number(remove)
+        total = "$" + total
+        index = total.indexOf(".")
         index = index + 3
-        content = content.slice(0,index)
+        total = total.slice(0,index)
+        $("#shipping").html(value);
+        $("#ship-guarantee").html(cancel);
+        $("#total").html(total);
+    })
 
-        $("#total").html(content)
-    }
-})
+    $("#guarantee").on("click", function (e) {
+        value = "$2.50"
+        if (document.getElementById("shipping").innerHTML != 0) {
+            remove = document.getElementById("shipping").innerHTML
+            remove = remove.replace("$","")
+        } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+            remove = document.getElementById("ship-guarantee").innerHTML
+            remove = remove.replace("$","")
+        } else {remove = 0}
+        cancel = "0"
+        total = document.getElementById("total").innerHTML
+        total = total.replace("$","")
+        total = Number(total) + 2.50 - Number(remove)
+        total = "$" + total
+        index = total.indexOf(".")
+        index = index + 3
+        total = total.slice(0,index)
+        $("#shipping").html(cancel);
+        $("#ship-guarantee").html(value);
+        $("#total").html(total);
+    })
+});
 
-//Function for shipping method
-$("#standard").on("click", function (e) {
-    value = "$1"
-    if (document.getElementById("shipping").innerHTML != 0) {
-        remove = document.getElementById("shipping").innerHTML
-        remove = remove.replace("$","")
-    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
-        remove = document.getElementById("ship-guarantee").innerHTML
-        remove = remove.replace("$","")
-    } else {remove = 0}
-    cancel = "0"
-    total = document.getElementById("total").innerHTML
-    total = total.replace("$","")
-    total = Number(total) + 1.00 - Number(remove)
-    total = "$" + total
-    index = total.indexOf(".")
-    index = index + 3
-    total = total.slice(0,index)
-    $("#shipping").html(value);
-    $("#ship-guarantee").html(cancel);
-    $("#total").html(total);
-})
 
-$("#express").on("click", function (e) {
-    value = "$5"
-    if (document.getElementById("shipping").innerHTML != 0) {
-        remove = document.getElementById("shipping").innerHTML
-        remove = remove.replace("$","")
-    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
-        remove = document.getElementById("ship-guarantee").innerHTML
-        remove = remove.replace("$","")
-    } else {remove = 0}
-    cancel = "0"
-    total = document.getElementById("total").innerHTML
-    total = total.replace("$","")
-    total = Number(total) + 5.00 - Number(remove)
-    total = "$" + total
-    index = total.indexOf(".")
-    index = index + 3
-    total = total.slice(0,index)
-    $("#shipping").html(value);
-    $("#ship-guarantee").html(cancel);
-    $("#total").html(total);
-})
-
-$("#guarantee").on("click", function (e) {
-    value = "$2.50"
-    if (document.getElementById("shipping").innerHTML != 0) {
-        remove = document.getElementById("shipping").innerHTML
-        remove = remove.replace("$","")
-    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
-        remove = document.getElementById("ship-guarantee").innerHTML
-        remove = remove.replace("$","")
-    } else {remove = 0}
-    cancel = "0"
-    total = document.getElementById("total").innerHTML
-    total = total.replace("$","")
-    total = Number(total) + 2.50 - Number(remove)
-    total = "$" + total
-    index = total.indexOf(".")
-    index = index + 3
-    total = total.slice(0,index)
-    $("#shipping").html(cancel);
-    $("#ship-guarantee").html(value);
-    $("#total").html(total);
-})
 
 //Functions for slideshow
 let slideIndex = 1;
