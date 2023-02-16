@@ -539,8 +539,10 @@ $(document).ready(function () {
     //Function to load out figure details
     function loadFig() {
         load = localStorage.getItem("fig")
-        load = load.replace('["',"")
-        load = load.replace('"]',"")
+        if (load != null) {
+            load = load.replace('["',"")
+            load = load.replace('"]',"")
+        }
         if (load == "fig1") {
             content = "",
             content = `<div class="model-fig"><div class="slideshow-container">
@@ -648,7 +650,6 @@ $(document).ready(function () {
     //Function to open figure details
     $(".item").on("click", function (e) {
         localStorage.clear("fig")
-        console.log(this.id);
         call = this.id
         if (call == "fig1" || call == "fig2") {
             let figStorage = localStorage.getItem("fig")
