@@ -152,31 +152,20 @@ $(document).ready(function () {
     $(".pdt").on("click", function(e) {
         e.preventDefault();
         var text = $(e.target).text();
+        formPdt(text);
         let recentStorage = localStorage.getItem("recent")
             ? JSON.parse(localStorage.getItem("recent"))
             :[];
         recentStorage.push(text);
         localStorage.setItem("recent", JSON.stringify(recentStorage));
-        formPdt(text);
-      
+    
     })
 
     function formPdt(text, limit=50) {
-
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://catnapaccounts-4ec8.restdb.io/rest/products",
-            "method": "GET",
-            "headers": {
-                "content-type": "application/json",
-                "x-apikey": APIKEY,
-                "cache-control": "no-cache"
-            }
-        }
     
-        $.ajax(settings).done(function (response) {
-            
+        $.getJSON("products.json", function (response) {
+            response = response.products;
+
             for (var i = 0; i < response.length && i < limit; i++){
                 if (text === `${response[i].pdt}`){
                     let content = "";
@@ -202,12 +191,12 @@ $(document).ready(function () {
                     }
     
                     end = `</div></div><div class="form-group" id="qty-option">Quantity:<span id="quantity-field">
-                    <button type="button" id="up" onclick="setQuantity('up');">+</button>
-                    <input type="text" id="pdt-quantity" value="1">
-                    <button type="button" id="down" onclick="setQuantity('down');">-</button></span>
+                    <button type="button" class="value" id="${response[i]._id}-up">+</button>
+                    <input type="text" class="pdt-quantity" id="${response[i]._id}" value="1">
+                    <button type="button" class="value" id="${response[i]._id}-down">-</button></span>
                     <p class="pdt-price">$${response[i].price}</p></div>
-                    <div class="form-end"><input type="button" id="pdt-submit" value="ADD TO CART">
-                    <a class="add-wish"><i class="fa-solid fa-star"></i></a></div></form></div>`
+                    <div class="form-end"><input id="${response[i].img}" type="button" class="pdt-submit" value="ADD TO CART">
+                    <a href="javascript:void(0);" id="${response[i].pdt}" class="add-wish"><i class="fa-solid fa-star"></i></a></div></form></div>`
     
                     content = front + sizes + sizeEnd + colours + end
                     $(".pdt-container").html(content);
@@ -219,14 +208,15 @@ $(document).ready(function () {
     }
 
     //Function to add product to wishlist using local storage
-    $(".add-wish").on("click", function(e) {
+    $(".pdt-container").on("click", ".add-wish", function(e) {
         e.preventDefault();
-        var text = $(e.target).text();
+        var text = e.currentTarget.id;
+        console.log(text);
         let wishStorage = localStorage.getItem("wish")
             ? JSON.parse(localStorage.getItem("wish"))
             :[];
         wishStorage.push(text);
-        localStorage.setItem("wish", JSON.stringify(recentStorage));
+        localStorage.setItem("wish", JSON.stringify(wishStorage));
       
     })
 
@@ -237,20 +227,40 @@ $(document).ready(function () {
 
     })
 
-    //Function to upload product details to cart api
-    $("#pdt-submit").on("click", function (e) { 
+    //Function to change order quantity
+    $(".pdt-container").on("click", ".value", function(e) {
         e.preventDefault();
-        console.log("submit")
-        let pdtName = $("#pdt-name").val();
-        let pdtImg = $(".pdt-img").val();
-        let pdtQty = $("#pdt-quantity").val();
-        let pdtPrice =$("#pdt-price").val();
+        quantity = this.id;
+        Id = quantity.replace("-up","")
+        Id = Id.replace("-down","")
+        qty = document.getElementById(Id).value;
+        quantity = quantity.replace(Id,"")
 
+        if (quantity == '-up') {
+            ++document.getElementById(Id).value;
+            qty = qty + 1
+        } else if (quantity == '-down' && qty > 1){
+            --document.getElementById(Id).value;
+            qty = qty - 1
+        } else {
+        }
+    })
+
+    //Function to upload product details to cart api
+    $(".pdt-container").on("click", ".pdt-submit" ,function (e) {
+        e.preventDefault();
+        let pdtName = $("#pdt-name").text();
+        let pdtImg = this.id;
+        let pdtQty = $(".pdt-quantity").val();
+        let pdtPrice =$(".pdt-price").text();
+        pdtPrice = pdtPrice.replace("$","");
+
+        /* working
         console.log(pdtName);
         console.log(pdtImg);
         console.log(pdtQty);
         console.log(pdtPrice);
-
+        */
     
         let jsondata = {
             "pdt": pdtName,
@@ -274,7 +284,6 @@ $(document).ready(function () {
         }
 
         $.ajax(settings).done(function (response) {
-            console.log(response);
         })
     });
 
@@ -313,15 +322,90 @@ $(document).ready(function () {
                 }
 
                 end = `<div class="order-option">Quantity:
-                <span id="quantity-field" id="${response[i].id}"><button id="${response[i].id}" class="up" onclick="setQuantity('up');">+</button>
-                <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button id="${response[i].id}" class="down" onclick="setQuantity('down');">-</button>
-                </span><p class="cart-price">$${response[i].total}</p></div></div></div>`
+                <span id="quantity-field" id="${response[i].id}-span"><button class="value" id="${response[i].id}-up">+</button>
+                <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button class="value" id="${response[i].id}-down">-</button>
+                </span></div><p class="cart-price">$${response[i].total}</p><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}">Remove</button></div></div></div>`
 
                 cartItem = front + details + end
                 content += cartItem
             }
             $(".list").html(content);
         })
+    }
+
+    //Function to remove cart items
+    $(".cart-remove").on("click", function(e) {
+        cartID = this.id
+
+        cartDelete(cartID);
+    })
+
+    function cartDelete(cartID) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": `https://catnapaccounts-4ec8.restdb.io/rest/cart/${cartID}`,
+            "method": "DELETE",
+            "headers": {
+              "content-type": "application/json",
+              "x-apikey": "<your CORS apikey here>",
+              "cache-control": "no-cache"
+            }
+          }
+          
+          $.ajax(settings).done(function (response) {
+            cartList();
+          });
+    }
+
+    //Function to edit cart item quantity
+    $(".item-cart").on("click", ".value", function(e) {
+        e.preventDefault();
+        quantity = this.id;
+        Id = quantity.replace("-up","")
+        Id = Id.replace("-down","")
+        qty = document.getElementById(Id).value;
+        quantity = quantity.replace(Id,"")
+
+        console.log(quantity);
+        console.log(Id);
+        console.log(qty);
+    
+        if (quantity == '-up') {
+            ++document.getElementById(Id).value;
+            qty = qty + 1
+            updatePrice(Id,qty);
+        }
+        else if (quantity == '-down' && qty > 1){
+            --document.getElementById(Id).value;
+            qty = qty - 1
+            updatePrice(Id,qty);
+        } else {
+        }
+    })
+
+    //Function to update total price after changing quantity
+    function updatePrice(Id,qty,limit=50) {
+        var jsondata = { "qty": qty };
+        var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `https://catnapaccounts-4ec8.restdb.io/rest/cart/${Id}`,
+        "method": "PUT",
+        "headers": {
+            "content-type": "application/json",
+            "x-apikey": APIKEY,
+            "cache-control": "no-cache"
+        },
+        "processData": false,
+        "data": JSON.stringify(jsondata)
+        }
+
+        $.ajax(settings).done(function (response) {
+        console.log(response);
+        
+        cartList();
+        }); 
     }
 
     //Function to load cart api items for checkout
@@ -361,7 +445,6 @@ $(document).ready(function () {
                 end = `<p class"checkout-price">$${response[i].total}</p></div></div>`
 
                 checkoutItem = front + details + end
-                console.log(checkoutItem)
                 content += checkoutItem
             }
             $(".order-list").html(content);
@@ -371,82 +454,76 @@ $(document).ready(function () {
     //Function to load out recently viewed
     function recentList(limit = 50) {
         recents = localStorage.getItem("recent")
-        recents = recents.replace(/[^\w ,]/g, '')
-        recent = recents.split(",")
-        recent = recent.reverse()
-        console.log(recent);
-        
+        if (recents != null) {
+            recents = recents.replace(/[^\w ,]/g, '')
+            recent = recents.split(",")
+            recent = recent.reverse()
 
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://catnapaccounts-4ec8.restdb.io/rest/product",
-            "method": "GET",
-            "headers": {
-                "content-type": "application/json",
-                "x-apikey": APIKEY,
-                "cache-control": "no-cache"
-            }
-        }
-    
-        $.ajax(settings).done(function(response) {
-    
-            content = ""
-        
-            for (var i = 0; i < response.length && i < limit; i++) {
-                
-                for (var a = 0; a< response.length && a < 4; a++) {
-                    if (recent[a] === `${response[i].pdt}`) {
-                        content += `<div class="box-2">
-                        <img class="box-img" src="${response[i].img}">
-                        <p class="box-price"$>${response[i].price}</p></div>`
+            $.getJSON("products.json", function (response) {
+                response = response.products;
+                content = ""
+
+                for (var a = 0; a < 4; a++) {
+                    
+                    front = `<div class="box-2">`
+
+                    for (var i = 0; i < response.length && i < limit; i++){
+                        if (recent[a] === `${response[i].pdt}`) {
+                            item = `<img class="box-img" src="${response[i].img}">
+                            <p class="box-price"$>$${response[i].price}</p>`
+                            break;
+                        } else {item = ""}
+
                     }
+                    end = `</div>`
+
+                    box = front + item + end
+                    content += box
                 }
-            }
-            
-            $("#recent").html(content);
-        })
+                
+                $("#recent").html(content);
+            })
+        }
+        
     }
 
     //Function to load out wishlist
     function wishList(limit = 50) {
         wish = localStorage.getItem("wish")
-        wish = wish.replace(/[^\w ,]/g, '')
-        wishlist = wish.split(",")
-        wishlist = wishlist.reverse()
-        console.log(wishlist);
-        
+        if (wish != null) {
+            wish = wish.replace(/[^\w ,]/g, '')
+            wishlist = wish.split(",")
+            wishlist = wishlist.reverse()
+            console.log(wishlist);
 
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://catnapaccounts-4ec8.restdb.io/rest/product",
-            "method": "GET",
-            "headers": {
-                "content-type": "application/json",
-                "x-apikey": APIKEY,
-                "cache-control": "no-cache"
-            }
-        }
-    
-        $.ajax(settings).done(function(response) {
-    
-            content = ""
-        
-            for (var i = 0; i < response.length && i < limit; i++) {
-                
-                for (var a = 0; a< response.length && a < 4; a++) {
-                    if (wishlist[a] === `${response[i].pdt}`) {
-                        content += `<div class="box-2">
-                        <img class="box-img" src="${response[i].img}">
-                        <p class="box-price"$>${response[i].price}</p></div>`
-                    }
-                }
-            }
+            $.getJSON("products.json", function (response) {
+                response = response.products;
+                content = ""
             
-            $("#wish").html(content);
-        })
+                for (var a = 0; a < 4; a++) {
+                    
+                    front = `<div class="box-2">`
+
+                    for (var i = 0; i < response.length && i < limit; i++){
+                        if (wishlist[a] === `${response[i].pdt}`) {
+                            item = `<img class="box-img" src="${response[i].img}">
+                            <p class="box-price"$>$${response[i].price}</p>`
+                            break;
+                        } else {item = ""}
+
+                    }
+                    end = `</div>`
+
+                    box = front + item + end
+                    content += box
+                }
+                
+                $("#wish").html(content);
+            })
+        }
+        
     }
+
 });
 
 //Functions to switch forms in checkout
