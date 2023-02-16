@@ -13,6 +13,7 @@ $(document).ready(function () {
     checkoutList();
     wishList();
     recentList();
+    loadFig();
   
     //Function to add new account to api database
     $("#account-submit").on("click", function (e) {
@@ -221,7 +222,7 @@ $(document).ready(function () {
     })
 
     //Function to close overlay
-    $(".close-btn").on("click", function(e) {
+    $("#pdt-close").on("click", function(e) {
         e.preventDefault();
         document.getElementById("pop-up").style.width = "0%";
 
@@ -527,6 +528,45 @@ $(document).ready(function () {
         
     }
 
+    //Function to load out figure details
+    function loadFig() {
+        load = localStorage.getItem("fig")
+        load = load.replace('["',"")
+        load = load.replace('"]',"")
+        console.log(load);
+        if (load == "fig1") {
+            content = "",
+            content = `<div class="model-fig"><div class="slideshow-container">
+                <div class="mySlides fade"><div class="numbertext">1 / 4</div><img src="img/fig1-front.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">2 / 4</div><img src="img/fig1-right.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">3 / 4</div><img src="img/fig1-left.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">4 / 4</div><div class="sketchfab-embed-wrapper"> 
+                <iframe style="width: 450px; height: 450px;" title="Cat figurine" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/759b8497018e41bfa44a87a3f8d27fde/embed?ui_theme=dark"></iframe> 
+                <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+                <a href="https://sketchfab.com/3d-models/cat-figurine-759b8497018e41bfa44a87a3f8d27fde?utm_medium=embed&utm_campaign=share-popup&utm_content=759b8497018e41bfa44a87a3f8d27fde" target="_blank" style="font-weight: bold; color: #1CAAD9;"> Cat figurine </a> by <a href="https://sketchfab.com/junyang_zhu?utm_medium=embed&utm_campaign=share-popup&utm_content=759b8497018e41bfa44a87a3f8d27fde" target="_blank" style="font-weight: bold; color: #1CAAD9;"> junyang_zhu </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=759b8497018e41bfa44a87a3f8d27fde" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div></div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a><a class="next" onclick="plusSlides(1)">❯</a></div><br>
+                <div style="text-align:center"><span class="dot" onclick="currentSlide(1)"></span> <span class="dot" onclick="currentSlide(2)"></span> <span class="dot" onclick="currentSlide(3)"></span> <span class="dot" onclick="currentSlide(4)"></span> </div></div>
+                <div class="fig-details"><h4>Cat in a pot</h4><p class="fig-detail"></p>
+                <p href="javascript:void(0)" id="insufficient" class="fig-price">750 points</p></div>`
+            $(".fig-container").html(content);
+            
+        } else if (load == "fig2") {
+            content = "",
+            content = `<div class="model-fig"><div class="slideshow-container">
+                <div class="mySlides fade"><div class="numbertext">1 / 4</div><img src="img/fig2-front.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">2 / 4</div><img src="img/fig2-right.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">3 / 4</div><img src="img/fig2-left.png" style="width:100%"></div>
+                <div class="mySlides fade"><div class="numbertext">4 / 4</div><div class="sketchfab-embed-wrapper"> 
+                <iframe style="width: 450px; height: 450px;" title="3DF IP Cat" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/fa8991a6bd174ba2ac163d62facb2cd1/embed"> </iframe> 
+                <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> 
+                <a href="https://sketchfab.com/3d-models/3df-ip-cat-fa8991a6bd174ba2ac163d62facb2cd1?utm_medium=embed&utm_campaign=share-popup&utm_content=fa8991a6bd174ba2ac163d62facb2cd1" target="_blank" style="font-weight: bold; color: #1CAAD9;"> 3DF IP Cat </a> by <a href="https://sketchfab.com/iizabelle?utm_medium=embed&utm_campaign=share-popup&utm_content=fa8991a6bd174ba2ac163d62facb2cd1" target="_blank" style="font-weight: bold; color: #1CAAD9;"> iizabelle </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=fa8991a6bd174ba2ac163d62facb2cd1" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div></div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a><a class="next" onclick="plusSlides(1)">❯</a></div><br>
+                <div style="text-align:center"><span class="dot" onclick="currentSlide(1)"></span> <span class="dot" onclick="currentSlide(2)"></span> <span class="dot" onclick="currentSlide(3)"></span> <span class="dot" onclick="currentSlide(4)"></span> </div></div>
+                <div class="fig-details"><h4>Cat in a pot</h4><p class="fig-detail"></p>
+                <p href="javascript:void(0)" id="insufficient" class="fig-price">750 points</p></div>`
+            $(".fig-container").html(content);
+        }
+    }
 });
 
 //Functions to switch forms in checkout
@@ -565,15 +605,55 @@ $("#logout").on("click",function (e) {
     window.location="index.html";
 })
 
-//Function for quantity button
-function setQuantity(upordown) {
-    var quantity = document.getElementById('pdt-quantity');
+//Function to bring out overlay
+$(".item").on("click", "#insufficient", function(e) {
+    e.preventDefault();
+    document.getElementById("pop-up").style.width = "100%";
+})
 
-    if (quantity.value > 1) {
-        if (upordown == 'up'){++document.getElementById('pdt-quantity').value;}
-        else if (upordown == 'down'){--document.getElementById('pdt-quantity').value;}}
-    else if (quantity.value == 1) {
-        if (upordown == 'up'){++document.getElementById('pdt-quantity').value;}}
-    else
-        {document.getElementById('pdt-quantity').value=1;}
+//Function to open figure details
+$(".item").on("click", function (e) {
+    localStorage.clear("fig")
+    console.log(this.id);
+    call = this.id
+    if (call == "fig1" || call == "fig2") {
+        let figStorage = localStorage.getItem("fig")
+        ? JSON.parse(localStorage.getItem("fig"))
+            :[];
+        figStorage.push(this.id);
+        localStorage.setItem("fig", JSON.stringify(figStorage));
+
+        window.location = "figure.html";
+    }
+
+})
+
+//Functions for slideshow
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
 }
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+
