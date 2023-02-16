@@ -307,24 +307,24 @@ $(document).ready(function () {
 
             for (var i = 0; i < response.length && i < limit; i++) {
                 
-                front = `<div class="item-cart" id="${response[i].id}" >
+                front = `<div class="item-cart">
                 <div class="img"><img src="${response[i].img}"></div>
                 <div class="info"><p>${response[i].pdt}</p>`
 
                 if ((`${response[i].size}` != "undefined") && (`${response[i].colour}` != "undefined")) {
-                    details = `<p class="cart-details>${response[i].size},${response[i].colour}</p>`
+                    details = `<p class="cart-details">${response[i].size},${response[i].colour}</p>`
                 } else if (`${response[i].size}` != "undefined") {
-                    details = `<p class="cart-details>${response[i].size}</p>`
+                    details = `<p class="cart-details">${response[i].size}</p>`
                 } else if (`${response[i].colour}` != "undefined") {
-                    details = `<p class="cart-details>${response[i].colour}</p>`
+                    details = `<p class="cart-details">${response[i].colour}</p>`
                 } else {
-                    details = `<p class="cart-details></p>`
+                    details = `<p class="cart-details"></p>`
                 }
 
                 end = `<div class="order-option">Quantity:
                 <span id="quantity-field" id="${response[i].id}-span"><button class="value" id="${response[i].id}-up">+</button>
                 <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button class="value" id="${response[i].id}-down">-</button>
-                </span></div><p class="cart-price">$${response[i].total}</p><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}">Remove</button></div></div></div>`
+                </span></div><p class="cart-price">$${response[i].total}</p><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}-remove">Remove</button></div></div></div>`
 
                 cartItem = front + details + end
                 content += cartItem
@@ -336,6 +336,7 @@ $(document).ready(function () {
     //Function to remove cart items
     $(".cart-remove").on("click", function(e) {
         cartID = this.id
+        cartID = cartID("-remove","");
 
         cartDelete(cartID);
     })
@@ -367,9 +368,11 @@ $(document).ready(function () {
         qty = document.getElementById(Id).value;
         quantity = quantity.replace(Id,"")
 
+        /*
         console.log(quantity);
         console.log(Id);
         console.log(qty);
+        */
     
         if (quantity == '-up') {
             ++document.getElementById(Id).value;
@@ -385,7 +388,7 @@ $(document).ready(function () {
     })
 
     //Function to update total price after changing quantity
-    function updatePrice(Id,qty,limit=50) {
+    function updatePrice(Id,qty) {
         var jsondata = { "qty": qty };
         var settings = {
         "async": true,
