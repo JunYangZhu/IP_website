@@ -310,7 +310,7 @@ $(document).ready(function () {
                 
                 front = `<div class="item-cart">
                 <div class="img"><img src="${response[i].img}"></div>
-                <div class="info"><p>${response[i].pdt}</p>`
+                <div class="cart-info"><p>${response[i].pdt}</p>`
 
                 if ((`${response[i].size}` != "undefined") && (`${response[i].colour}` != "undefined")) {
                     details = `<p class="cart-details">${response[i].size},${response[i].colour}</p>`
@@ -325,7 +325,7 @@ $(document).ready(function () {
                 end = `<div class="order-option">Quantity:
                 <span id="quantity-field" id="${response[i].id}-span"><button class="value" id="${response[i].id}-up">+</button>
                 <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button class="value" id="${response[i].id}-down">-</button>
-                </span></div><p class="cart-price">$${response[i].total}</p><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}-remove">Remove</button></div></div></div>`
+                </span></div><p class="cart-price">$${response[i].total}</p></div><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}-remove">Remove</button></div></div></div>`
 
                 cartItem = front + details + end
                 content += cartItem
@@ -429,6 +429,7 @@ $(document).ready(function () {
         $.ajax(settings).done(function(response) {
     
             content = "";
+            total = 0
 
             for (var i = 0; i < response.length && i < limit; i++) {
                 
@@ -446,12 +447,21 @@ $(document).ready(function () {
                     details = `</p>`
                 }
 
+                retail += response[i].total
+
                 end = `<p class"checkout-price">$${response[i].total}</p></div></div>`
 
                 checkoutItem = front + details + end
                 content += checkoutItem
             }
+            subtotal = retail +10
+            retail = "$" + retail
+            subtotal = "$" + subtotal
+            
             $(".order-list").html(content);
+            $("#retail").html(retail);
+            $("#subtotal").html(subtotal);
+            $("#total").html(subtotal);
         })
     }
 
@@ -533,7 +543,6 @@ $(document).ready(function () {
         load = localStorage.getItem("fig")
         load = load.replace('["',"")
         load = load.replace('"]',"")
-        console.log(load);
         if (load == "fig1") {
             content = "",
             content = `<div class="model-fig"><div class="slideshow-container">
@@ -572,8 +581,40 @@ $(document).ready(function () {
 //Functions to switch forms in checkout
 $("#next-button").on("click",function (e) {
     e.preventDefault();
+    localStorage.clear("price")
+    total = document.getElementById("total").innerHTML
+    retail = document.getElementById("retail").innerHTML
+    subtotal = document.getElementById("subtotal").innerHTML
+    shipping = document.getElementById("shipping").innerHTML
+    shipGuarantee = document.getElementById("ship-guarantee").innerHTML
+    content = total + "," + retail + "," + subtotal + ", " + shipping + "," + shipGuarantee
+    let priceStorage = localStorage.getItem("price")
+        ? JSON.parse(localStorage.getItem("price"))
+            :[];
+        priceStorage.push(content);
+        localStorage.setItem("price", JSON.stringify(priceStorage));
+
     $("#checkout").hide();
     $("#payment").show();
+    prices = localStorage.getItem("price")
+    prices = prices.replace('["',"")
+    prices = prices.replace('"]',"")
+    prices = prices.split(",")
+    $("#final-total").html(prices[0])
+})
+
+$("#back-checkout").on("click",function (e) {
+    $("#payment").hide();
+    $("#checkout").show();
+    prices = localStorage.getItem("price")
+    prices = prices.replace('["',"")
+    prices = prices.replace('"]',"")
+    prices = prices.split(",")
+    $("#total").html(prices[0])
+    $("#retail").html(prices[1])
+    $("#subtotal").html(prices[2])
+    $("#shipping").html(prices[3])
+    $("#ship-guarantee").html(prices[4])
 })
 
 $("#checkout-submit").on("click",function (e) {
@@ -584,18 +625,15 @@ $("#checkout-submit").on("click",function (e) {
 
 //Function to pop out form to enter card information
 $("#card").on("click",function (e) {
-    e.preventDefault();
     $("#card-payment").show();
 })
 
 //Functions to remove card info form
 $("#grab").on("click",function (e) {
-    e.preventDefault();
     $("#card-payment").hide();
 })
 
 $("#apple").on("click",function (e) {
-    e.preventDefault();
     $("#card-payment").hide();
 })
 
@@ -626,6 +664,100 @@ $(".item").on("click", function (e) {
         window.location = "figure.html";
     }
 
+})
+
+$("#voucher").on("click", function(e) {
+    e.preventDefault();
+    if (this.value == "") {
+        this.value = "CATNAP3429A"
+        total = document.getElementById("total").innerHTML
+        total = total.replace("$","")
+        discount = total - total/20
+        content = "(Discounted) $" + discount
+        index = content.indexOf(".")
+        index = index + 3
+        content = content.slice(0,index)
+
+        $("#total").html(content)
+    } else if (this.value == "CATNAP3429A") {
+        this.value = ""
+        total = document.getElementById("total").innerHTML
+        total = total.replace("(Discounted) $","")
+        discount = total/19*20
+        content = "$" + discount
+        index = content.indexOf(".")
+        index = index + 3
+        content = content.slice(0,index)
+
+        $("#total").html(content)
+    }
+})
+
+//Function for shipping method
+$("#standard").on("click", function (e) {
+    value = "$1"
+    if (document.getElementById("shipping").innerHTML != 0) {
+        remove = document.getElementById("shipping").innerHTML
+        remove = remove.replace("$","")
+    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+        remove = document.getElementById("ship-guarantee").innerHTML
+        remove = remove.replace("$","")
+    } else {remove = 0}
+    cancel = "0"
+    total = document.getElementById("total").innerHTML
+    total = total.replace("$","")
+    total = Number(total) + 1.00 - Number(remove)
+    total = "$" + total
+    index = total.indexOf(".")
+    index = index + 3
+    total = total.slice(0,index)
+    $("#shipping").html(value);
+    $("#ship-guarantee").html(cancel);
+    $("#total").html(total);
+})
+
+$("#express").on("click", function (e) {
+    value = "$5"
+    if (document.getElementById("shipping").innerHTML != 0) {
+        remove = document.getElementById("shipping").innerHTML
+        remove = remove.replace("$","")
+    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+        remove = document.getElementById("ship-guarantee").innerHTML
+        remove = remove.replace("$","")
+    } else {remove = 0}
+    cancel = "0"
+    total = document.getElementById("total").innerHTML
+    total = total.replace("$","")
+    total = Number(total) + 5.00 - Number(remove)
+    total = "$" + total
+    index = total.indexOf(".")
+    index = index + 3
+    total = total.slice(0,index)
+    $("#shipping").html(value);
+    $("#ship-guarantee").html(cancel);
+    $("#total").html(total);
+})
+
+$("#guarantee").on("click", function (e) {
+    value = "$2.50"
+    if (document.getElementById("shipping").innerHTML != 0) {
+        remove = document.getElementById("shipping").innerHTML
+        remove = remove.replace("$","")
+    } else if (document.getElementById("ship-guarantee").innerHTML != 0) {
+        remove = document.getElementById("ship-guarantee").innerHTML
+        remove = remove.replace("$","")
+    } else {remove = 0}
+    cancel = "0"
+    total = document.getElementById("total").innerHTML
+    total = total.replace("$","")
+    total = Number(total) + 2.50 - Number(remove)
+    total = "$" + total
+    index = total.indexOf(".")
+    index = index + 3
+    total = total.slice(0,index)
+    $("#shipping").html(cancel);
+    $("#ship-guarantee").html(value);
+    $("#total").html(total);
 })
 
 //Functions for slideshow
