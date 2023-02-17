@@ -19,6 +19,7 @@ As someone who likes to collect things, I can redeem figurines by using my point
 
 Features
 In this section, you should go over the different parts of your project, and describe each in a sentence or so.
+GITHUB PAGE https://github.com/JunYangZhu/IP_website.git
 
 Existing Features
 Feature 1 - Account creation/Login
