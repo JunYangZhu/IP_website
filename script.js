@@ -134,8 +134,10 @@ $(document).ready(function () {
         
             for (var i = 0; i < response.length && i < limit; i++) {
                 username = localStorage.getItem("account-name")
-                username = username.replace('["', '')
-                username = username.replace('"]', '')
+                if (username != null) {
+                    username = username.replace('["', '')
+                    username = username.replace('"]', '')
+                }
                 if (username === `${response[i].name}`) {
                 content = `<h2 class='account-name'>${response[i].name}</h2>
                 <h2 class='membership-rank'>BRONZE</h2>
@@ -158,6 +160,7 @@ $(document).ready(function () {
         recentStorage.push(text);
         localStorage.setItem("recent", JSON.stringify(recentStorage));
     
+        console.log(localStorage.getItem("recent"));
     })
 
     function formPdt(text, limit=50) {
@@ -210,7 +213,6 @@ $(document).ready(function () {
     $(".pdt-container").on("click", ".add-wish", function(e) {
         e.preventDefault();
         var text = e.currentTarget.id;
-        console.log(text);
         let wishStorage = localStorage.getItem("wish")
             ? JSON.parse(localStorage.getItem("wish"))
             :[];
@@ -253,78 +255,76 @@ $(document).ready(function () {
         let pdtQty = $(".pdt-quantity").val();
         let pdtPrice =$(".pdt-price").text();
         pdtPrice = pdtPrice.replace("$","");
+        pdtQty = Number(pdtQty)  
+        pdtPrice = Number(pdtPrice)
 
-        /* working
-        console.log(pdtName);
-        console.log(pdtImg);
-        console.log(pdtQty);
-        console.log(pdtPrice);
-        */
-    
-        let jsondata = {
+        var jsondata = {
             "pdt": pdtName,
             "img": pdtImg,
             "qty": pdtQty,
             "price": pdtPrice,
+            "size": "",
+            "colour": ""
         };
 
-        let settings = {
+        var settings = {
             "async": true,
             "crossDomain": true,
             "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
             "method": "POST",
             "headers": {
-            "content-type": "application/json",
-            "x-apikey": APIKEY,
-            "cache-control": "no-cache"
+                "content-type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
             },
             "processData": false,
             "data": JSON.stringify(jsondata),
         }
 
         $.ajax(settings).done(function (response) {
+            document.getElementById("pop-up").style.width = "0%";
         })
     });
 
     //Function to load cart api items to cart
     function cartList(limit = 15) {
         var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
-            "method": "GET",
-            "headers": {
-                "content-type": "application/json",
-                "x-apikey": APIKEY,
-                "cache-control": "no-cache"
-            }
+          "async": true,
+          "crossDomain": true,
+          "url": "https://catnapaccounts-4ec8.restdb.io/rest/cart",
+          "method": "GET",
+          "headers": {
+            "content-type": "application/json",
+            "x-apikey": APIKEY,
+            "cache-control": "no-cache"
+          }
         }
     
         $.ajax(settings).done(function(response) {
     
             content = "";
-
+        
             for (var i = 0; i < response.length && i < limit; i++) {
-                
+        
                 front = `<div class="item-cart">
-                <div class="img"><img src="${response[i].img}"></div>
-                <div class="cart-info"><p>${response[i].pdt}</p>`
-
-                if ((`${response[i].size}` != "undefined") && (`${response[i].colour}` != "undefined")) {
-                    details = `<p class="cart-details">${response[i].size},${response[i].colour}</p>`
-                } else if (`${response[i].size}` != "undefined") {
-                    details = `<p class="cart-details">${response[i].size}</p>`
-                } else if (`${response[i].colour}` != "undefined") {
-                    details = `<p class="cart-details">${response[i].colour}</p>`
+                        <div class="cart-img"><img src="${response[i].img}"></div>
+                        <div class="cart-info"><h4>${response[i].pdt}</h4>`
+        
+                if ((`${response[i].size}` != "") && (`${response[i].colour}` != "")) {
+                details = `<p class="cart-details">${response[i].size},${response[i].colour}</p>`
+                } else if (`${response[i].size}` != "") {
+                details = `<p class="cart-details">${response[i].size}</p>`
+                } else if (`${response[i].colour}` != "") {
+                details = `<p class="cart-details">${response[i].colour}</p>`
                 } else {
-                    details = `<p class="cart-details"></p>`
+                details = `<p class="cart-details"></p>`
                 }
-
-                end = `<div class="order-option">Quantity:
-                <span id="quantity-field" id="${response[i].id}-span"><button class="value" id="${response[i].id}-up">+</button>
-                <input type="text" class="cart-quantity" id="${response[i].id}" value="${response[i].qty}"><button class="value" id="${response[i].id}-down">-</button>
-                </span></div><p class="cart-price">$${response[i].total}</p></div><div class="cart-end"><button type="button" class="cart-remove" id="${response[i].id}-remove">Remove</button></div></div></div>`
-
+        
+                end = `<div class="order-option"> Quantity:
+                        <span id="quantity-field"><button id="${response[i]._id}-up" class="value">+</button>
+                        <input type="text" class="cart-quantity" id="${response[i]._id}" value="${response[i].qty}"><button id="${response[i]._id}-down" class="value" >-</button>
+                        </span></div><p class="cart-price">$${response[i].total}</p></div><div class="cart-end"><button type="button" class="cart-remove" id="${response[i]._id}-remove">Remove</button></div></div>`
+        
                 cartItem = front + details + end
                 content += cartItem
             }
@@ -334,6 +334,7 @@ $(document).ready(function () {
 
     //Function to remove cart items
     $(".cart-remove").on("click", function(e) {
+        e.preventDefault();
         cartID = this.id
         cartID = cartID("-remove","");
 
@@ -362,32 +363,30 @@ $(document).ready(function () {
     $(".item-cart").on("click", ".value", function(e) {
         e.preventDefault();
         quantity = this.id;
-        Id = quantity.replace("-up","")
-        Id = Id.replace("-down","")
-        qty = document.getElementById(Id).value;
-        quantity = quantity.replace(Id,"")
-
-        /*
-        console.log(quantity);
-        console.log(Id);
-        console.log(qty);
-        */
+        Id = quantity.replace("-up", "")
+        Id = Id.replace("-down", "")
+        qty = document.getElementById(Id);
+        qty = qty.value
+        qty = Number(qty)
+        quantity = quantity.replace(Id, "")
     
         if (quantity == '-up') {
-            ++document.getElementById(Id).value;
-            qty = qty + 1
-            updatePrice(Id,qty);
+          ++document.getElementById(Id).value;
+          qty = qty + 1
+          updatePrice(Id, qty);
         }
-        else if (quantity == '-down' && qty > 1){
-            --document.getElementById(Id).value;
-            qty = qty - 1
-            updatePrice(Id,qty);
+        else if (quantity == '-down' && qty > 1) {
+          --document.getElementById(Id).value;
+          qty = qty - 1
+          updatePrice(Id, qty);
         } else {
         }
-    })
+      })
 
     //Function to update total price after changing quantity
     function updatePrice(Id,qty) {
+        console.log(Id)
+        console.log(qty)
         var jsondata = { "qty": qty };
         var settings = {
         "async": true,
@@ -427,7 +426,7 @@ $(document).ready(function () {
         $.ajax(settings).done(function(response) {
     
             content = "";
-            total = 0
+            retail = 0
 
             for (var i = 0; i < response.length && i < limit; i++) {
                 
@@ -493,7 +492,7 @@ $(document).ready(function () {
                     content += box
                 }
                 
-                $("#recent").html(content);
+                $("#recentbox").html(content);
             })
         }
         
@@ -530,7 +529,7 @@ $(document).ready(function () {
                     content += box
                 }
                 
-                $("#wish").html(content);
+                $("#wishbox").html(content);
             })
         }
         

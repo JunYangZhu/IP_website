@@ -15,51 +15,55 @@
     </head>
 
     <body>
-
-        <div class=" form-container" id="add-container">
-            <h1>Register Account</h1>
-            <div id="add-update-pw">
-                <div class="alert alert-success" role="alert">
-                    Account created successfully!
+        <div class="enter-container">
+            <div class="login-logo">
+                <img src="img/Company_logo.png">
+            </div>
+            <div class=" form-container" id="add-container">
+                <h1>Register Account</h1>
+                <div id="add-update-pw">
+                    <div class="alert alert-success" role="alert">
+                        Account created successfully!
+                    </div>
                 </div>
-            </div>
-            <div class="form" id="add-account">
-                <form id="add-account-form">
-                    <div class="form-group">
-                        <label for="account-name">Username</label>
-                        <input type="text" id="account-name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="account-email">Email</label>
-                        <input type="email" id="account-email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="account-pw">Password</label>
-                        <input type="text" id="account-pw" class="form-control" required>
-                    </div>
+                <div class="form" id="add-account">
+                    <form id="add-account-form">
+                        <div class="form-group">
+                            <label for="account-name">Username</label>
+                            <input type="text" id="account-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-email">Email</label>
+                            <input type="email" id="account-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-pw">Password</label>
+                            <input type="text" id="account-pw" class="form-control" required>
+                        </div>
 
-                        <input type="submit" value="SIGN UP" class="btn btn-primary" id="account-submit">
-                        <button id="open-login">or LOGIN</button>
-                </form>
-            </div>
-        </div><!-- end add container --> 
+                            <input type="submit" value="SIGN UP" class="btn btn-primary" id="account-submit">
+                            <button id="open-login">or LOGIN</button>
+                    </form>
+                </div>
+            </div><!-- end add container --> 
 
-        <div class="form-container" id="login-container">
-            <h1>Login</h1>
-            <div class="form" id="login">
-                <form id="login-form">
-                    <button id="back-btn"><i class="fa-regular fa-circle-left"></i></button>
-                    <div class="form-group">
-                        <label for="login-account-name">Username</label>
-                        <input type="text" id="login-account-name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="login-account-pw">Password</label>
-                        <input type="text" id="login-account-pw" class="form-control" required>
-                    </div>
+            <div class="form-container" id="login-container">
+                <h1>Login</h1>
+                <div class="form" id="login">
+                    <form id="login-form">
+                        <button id="back-btn"><i class="fa-regular fa-circle-left"></i></button>
+                        <div class="form-group">
+                            <label for="login-account-name">Username</label>
+                            <input type="text" id="login-account-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-account-pw">Password</label>
+                            <input type="text" id="login-account-pw" class="form-control" required>
+                        </div>
 
-                    <input type="submit" value="Login" class="btn" id="login-submit">
-                </form>
+                        <input type="submit" value="Login" class="btn" id="login-submit">
+                    </form>
+                </div>
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
