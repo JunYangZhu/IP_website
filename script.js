@@ -646,6 +646,11 @@ $(document).ready(function () {
         document.getElementById("pop-up").style.width = "100%";
     })
 
+    $("#insufficient").on("click", function(e) {
+        e.preventDefault();
+        document.getElementById("pop-up").style.width = "100%";
+    })
+
     //Function to open figure details
     $(".item").on("click", function (e) {
         localStorage.clear("fig")
